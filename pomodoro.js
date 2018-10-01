@@ -25,29 +25,18 @@ function setLayout() {
 
   if (winRatio < 1.2) {
     layout = "portrait";
-    displayBheight = calcH * (1 / 15);
+    displayBheight = calcH * (2 / 15);
     displayAheight = calcH * (2 / 15);
-    keyRows = 6;
   } else if (winRatio >= 1.2 && winRatio < 2.1) {
     layout = "landscape";
-    displayBheight = calcH * (1 / 11);
+    displayBheight = calcH * (2 / 11);
+    mainDisplayHeight = calcH * (7 / 11);
     displayAheight = calcH * (2 / 11);
-    keyRows = 4;
   } else {
     layout = "landscapeLong";
     displayBheight = calcH * (1 / 9);
     displayAheight = calcH * (2 / 9);
-    keyRows = 3;
   }
-
-  keyboardHeight = calcH - displayAheight - displayBheight;
-
-  if (layout === "landscapeLong" && mobile === true) {
-    numOfKeys = 24;
-  } else {
-    numOfKeys = 23;
-  }
-  keyHeight = (keyboardHeight / keyRows); // -2px for key 1px border
 }
 
 function drawPage() {
@@ -76,8 +65,8 @@ function stylePage() {
   }
 
   displayB.style.height= `${displayBheight}px`;
+  mainDisplay.style.height = `${mainDisplayHeight}px`;
   displayA.style.height= `${displayAheight}px`;
-  keyboard.style.height= `${keyboardHeight}px`;
 
   displayB.style.lineHeight = `${displayBheight}px`;
   displayA.style.lineHeight = `${displayAheight}px`;
@@ -87,6 +76,7 @@ function stylePage() {
 
   container.style.backgroundColor = containerBgColor;
   displayB.style.backgroundColor = dispBbgColor;
+  mainDisplay.style.backgroundColor = mainDisplayBgColor;
   body.style.background = bodyBgColor;
 
   if (mobile === false && maximize === false) {
@@ -95,14 +85,6 @@ function stylePage() {
     container.style.boxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
   }
 }
-
-
-
-
-
-
-
-
 
 function toggleMaxLayout() {
   if (maximize === false) {
@@ -146,30 +128,6 @@ function exitFullscreen() {
   fullscrn = false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ---------- initial declarations and commands -------------
 
 let calcW = 0;
@@ -188,6 +146,7 @@ let fullscrn = false;
 
 let displayAheight = 0;
 let displayBheight = 0;
+let mainDisplayHeight = 0;
 let keyboardHeight = 0;
 let keyHeight = 0;
 let keyRows = 0;
@@ -213,27 +172,14 @@ let maxCharsPortrait = 39;
 let maxCharsLandscape = 41;
 let maxCharsLandsLong = 66;
 
-let strA = "";
-let strB = "";
-let history = "";
-let input = "";
+// Toggle visible backgrounds for 3 divs in container
+let devColor = true;
 
-let parenth = 0;
-let decimal = false;
-let digits = 0;
-let positive = true;
-let resultToClear = false
-let infinityToClear = false;
-let operatorEdit = false;
-let msgToClrDispB = false;
-let origExprToEval = "";
-
-let prevColor = "";
-let keyBgColor = "#14202b";
-let dispBbgColor = "#192938";
-let containerBgColor = "#101519";
-let keyboardBgColor = "#11443f";
-let bodyBgColor = "#7a7b6e";
+let dispBbgColor = "black";
+let dispAbgColor = "black";
+let containerBgColor = "black";
+let bodyBgColor = "black";
+let mainDisplayBgColor = "black";
 
 let bodyColor = "#c0daf1"; // default text color (used in displays)
 let keyDigitColor = "hsl(208, 52%, 72%)"; // default key text color (digits and '.')
@@ -257,7 +203,6 @@ let displayA = document.getElementById('displayA');
 let displayB = document.getElementById('displayB');
 let displayAtext = document.getElementById('displayAtext');
 let displayBtext = document.getElementById('displayBtext');
-let keyboard = document.getElementById('keyboard');
 let container = document.getElementById('container');
 
 let dispAstore = "";
@@ -284,17 +229,19 @@ let scrollStr = "";
 let scrollMax = 0;
 let scrollAnim = null;
 
-menuContainer.style.zIndex = "-1";
+if (devColor == true) {
+  containerBgColor = "#101519";
+  bodyBgColor = "#110f0b";
+  mainDisplayBgColor = "#0f0d09";
+}
+
 body.style.color = bodyColor;
 body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
 container.style.margin = "auto";
 displayB.style.textAlign = "right";
-displayA.style.backgroundColor = "black";
+displayA.style.backgroundColor = dispAbgColor;
 displayA.style.textAlign = "right";
-keyboard.style.backgroundColor = keyboardBgColor;
-keyboard.style.display = "grid";
-keyboard.style.margin = "auto";
 
 drawPage(); // Also called whenever window (body) is resized
 displayBtext.style.opacity = "0.0"; // Prevents brief flash of 'waiting for input...' message at startup
