@@ -60,7 +60,6 @@ function drawPage() {
 function stylePage() {
   function styleDefaults(defaultItems) {
     for (let i = 0; i < defaultItems.length; i++) {
-      //defaultItems[i].style.position = 'relative';
       defaultItems[i].style.display = 'inline-block';
       defaultItems[i].style.verticalAlign = 'middle';
       defaultItems[i].style.backgroundColor = settingsColor;
@@ -78,7 +77,8 @@ function stylePage() {
     fontSizeB = timerW / 23;
   } else if (layout === "landscape") {
     lineH = topDisplayH * 0.05;
-    topLineW = timerW * 0.3;
+    topLineW = timerW * 0.285;
+    bottomLineW = timerW * 0.35;
     lineTopVert = (topDisplayH - lineH) / 2;
     topTextH = topDisplayH / 3;
     fontSizeA = timerH / 7.8;
@@ -94,9 +94,6 @@ function stylePage() {
 
   topDisplay.style.lineHeight = `${topDisplayH}px`;
   bottomDisplay.style.lineHeight = `${bottomDisplayH}px`;
-
-  //bottomDisplayText.style.fontSize = `${fontSizeA}px`;
-  //topDisplayText.style.fontSize = `${fontSizeB}px`;
 
   styleDefaults(defaultItems);
   styleLines(lines);
@@ -124,28 +121,30 @@ function stylePage() {
   lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
 
-  lineBottomL.style.width = `${topLineW}px`;
+  lineBottomL.style.width = `${bottomLineW}px`;
   lineBottomL.style.left = '0px';
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
-  bottomControlsBox.style.width = `${timerW - (topLineW * 2)}px`;
+  bottomControlsBox.style.width = `${timerW - (bottomLineW * 2)}px`;
   bottomControlsBox.style.height = `${topTextH * 2}px`;
   bottomControlsBox.style.backgroundColor = mainDisplayBgColor;
 
-  lineBottomR.style.width = `${topLineW}px`;
+  lineBottomR.style.width = `${bottomLineW}px`;
   lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
   document.getElementById('bottomControlsBox').appendChild(play);
-
   play.style.backgroundColor = settingsColor;
+  play.style.display = 'inline-block';
   play.style.height = '100%';
   play.style.verticalAlign = 'top';
   play.style.margin = '0 20px 0 0';
 
-
-
-
-
+  document.getElementById('bottomControlsBox').appendChild(reset);
+  reset.style.backgroundColor = settingsColor;
+  reset.style.display = 'inline-block';
+  reset.style.height = '100%';
+  reset.style.verticalAlign = 'top';
+  reset.style.margin = '0 20px 0 0';
 
   if (mobile === false && maximize === false) {
     container.style.webkitBoxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
@@ -216,15 +215,12 @@ let mainDisplayH = 0;
 
 let lineH = 0;
 let topLineW = 0;
+let bottomLineW = 0;
 let lineTopVert = 0;
 let topTextH = 0;
 
 let fontSizeA = 0;
 let fontSizeB = 0;
-let fontSizeKeys = 0;
-
-let horOffset = 0;
-let vertOffset = 0;
 
 // maximum string lengths for secondary display (topDisplay):
 let maxCharsPortrait = 39;
@@ -256,6 +252,8 @@ let bottomControlsBox = document.getElementById('bottomControlsBox');
 
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
+let reset = document.createElement('img');
+reset.src = 'img/resetMask.png';
 
 let defaultItems = [lineTopL, lineTopR, topTextBox, lineBottomL, lineBottomR, bottomControlsBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
