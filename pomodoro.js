@@ -137,14 +137,14 @@ function stylePage() {
   play.style.display = 'inline-block';
   play.style.height = '100%';
   play.style.verticalAlign = 'top';
-  play.style.margin = '0 20px 0 0';
+  play.style.margin = '0 15px 0 0'; // change to fraction (of something)
 
   document.getElementById('bottomControlsBox').appendChild(reset);
   reset.style.backgroundColor = settingsColor;
   reset.style.display = 'inline-block';
   reset.style.height = '100%';
   reset.style.verticalAlign = 'top';
-  reset.style.margin = '0 20px 0 0';
+  reset.style.margin = '0 20px 0 0'; // change to fraction (of something)
 
   if (mobile === false && maximize === false) {
     container.style.webkitBoxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
