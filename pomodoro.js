@@ -16,11 +16,11 @@ function getDisplayData() {
 function setLayout() {
   if (mobile === false && maximize === false) {
     if (screenW < 2200) {
-      if (calcW > 480) { calcW = 480; }
-      if (calcH > 385) { calcH = 385; }
+      if (timerW > 480) { timerW = 480; }
+      if (timerH > 385) { timerH = 385; }
     } else if (screenW < 4400) {
-      if (calcW > 720) { calcW = 720; }
-      if (calcH > 578) { calcH = 578; }
+      if (timerW > 720) { timerW = 720; }
+      if (timerH > 578) { timerH = 578; }
     }
   }
 
