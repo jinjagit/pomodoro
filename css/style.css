@@ -18,26 +18,6 @@ body {
   fontFamily: 'Ubuntu Mono', monospace;
 }
 
-#displayB {
-  textAlign: right;
-}
-
-#displayBtext {
-  display: inline-block;
-  verticalAlign: middle;
-  lineHeight: normal;
-}
-
-#displayAtext {
-  display: inline-block;
-  verticalAlign: middle;
-  lineHeight: normal;
-}
-
-#menuContainer {
-  zIndex: -1;
-}
-
 sup {
     vertical-align: super;
     font-size: 60%;
