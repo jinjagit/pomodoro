@@ -98,7 +98,7 @@ function stylePage() {
   } else if (layout === "landscape") { // only working on this, atm.
     lineH = topDisplayH * 0.043;
     topLineW = timerW * 0.255;
-    bottomLineW = timerW * 0.35;
+    bottomLineW = timerW * 0.3;
     lineTopVert = (topDisplayH - lineH) / 2;
     textH = topDisplayH / 2.5; // ?change to 'textH'?
   } else {
@@ -201,11 +201,14 @@ function stylePage() {
   lineBottomR.style.width = `${bottomLineW}px`;
   lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
-  document.getElementById('bottomControlsBox').appendChild(play);
-  play.style.margin = `0 ${timerW / 26}px 0 0`;
+  document.getElementById('bottomControlsBox').appendChild(soundOn);
+  soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
 
   document.getElementById('bottomControlsBox').appendChild(reset);
-  reset.style.margin = `0 ${timerW / 23}px 0 0`;
+  reset.style.margin = `0 ${timerW / 30}px 0 0`;
+
+  document.getElementById('bottomControlsBox').appendChild(play);
+  play.style.margin = `0 ${timerW / 24}px 0 0`;
 
   document.getElementById('topSettingsHourBox').appendChild(increment1);
   increment1.style.width = '100%';
@@ -375,6 +378,8 @@ let play = document.createElement('img');
 play.src = 'img/playMask.png';
 let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
+let soundOn = document.createElement('img');
+soundOn.src = 'img/soundOnMask.png';
 let increment1 = document.createElement('img');
 increment1.src = 'img/incrMask.png';
 let increment2 = document.createElement('img');
@@ -392,7 +397,7 @@ let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
   bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox, topSettingsHourBox,
   topSettingsHTextBox,topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
-let buttons = [play, reset];
+let buttons = [play, reset, soundOn];
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
   topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText];
 
