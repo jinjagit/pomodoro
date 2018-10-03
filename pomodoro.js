@@ -88,7 +88,6 @@ function stylePage() {
 
   function styleText(text) {
     for (let i = 0; i < text.length; i++) {
-      text[i].style.textAlign = 'center';
       text[i].style.fontSize = `${textH}px`;
       text[i].style.lineHeight = `${textH}px`;
     }
@@ -129,7 +128,6 @@ function stylePage() {
   styleButons(buttons);
   styleText(text);
 
-
   bottomDisplay.style.textAlign = "right";
 
   // This block can all be set to 'black' when layout finalized -------------
@@ -146,6 +144,11 @@ function stylePage() {
   bottomSettingsContainer.style.backgroundColor = settingsDispBbgColor;
   topSettingsTextBox.style.backgroundColor = settingsDispBbgColor;
   bottomSettingsTextBox.style.backgroundColor = mainDisplayBgColor;
+  topSettingsHourBox.style.backgroundColor = settingsDispBbgColor;
+  topSettingsHTextBox.style.backgroundColor = settingsDispBbgColor;
+  topSettingsTenBox.style.backgroundColor = settingsDispBbgColor;
+  topSettingsMinBox.style.backgroundColor = settingsDispBbgColor;
+  topSettingsMinTextBox.style.backgroundColor = settingsDispBbgColor;
   // ------------------------------------------------------------------------
 
   lineTopL.style.width = `${topLineW}px`;
@@ -154,6 +157,7 @@ function stylePage() {
   titleTextBox.style.width = `${timerW - (topLineW * 2)}px`;
   titleTextBox.style.height = `${textH}px`;
 
+  titleText.style.textAlign = 'center';
   titleText.innerHTML = "DUTY SETTINGS";
   titleText.style.color = settingsColor;
 
@@ -163,17 +167,30 @@ function stylePage() {
   topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
   bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
 
-  topSettingsTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  topSettingsTextBox.style.width = `${timerW / 2.25}px`;
   topSettingsTextBox.style.height = `${textH}px`;
 
+  topSettingsText.style.textAlign = 'right';
   topSettingsText.innerHTML = "ON DUTY:";
   topSettingsText.style.color = onDutyColor;
+  topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
-  bottomSettingsTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
   bottomSettingsTextBox.style.height = `${textH}px`;
 
+  topSettingsHourBox.style.width = `${timerW / 13}px`;
+  topSettingsHourBox.style.height = `${textH * 3}px`;
+
+  topSettingsTenBox.style.width = `${timerW / 13}px`;
+  topSettingsTenBox.style.height = `${textH * 3}px`;
+
+  topSettingsMinBox.style.width = `${timerW / 13}px`;
+  topSettingsMinBox.style.height = `${textH * 3}px`;
+
+  bottomSettingsText.style.textAlign = 'right';
   bottomSettingsText.innerHTML = "OFF DUTY:";
   bottomSettingsText.style.color = offDutyColor;
+  bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
   lineBottomL.style.width = `${bottomLineW}px`;
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
@@ -185,10 +202,84 @@ function stylePage() {
   lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
   document.getElementById('bottomControlsBox').appendChild(play);
-  play.style.margin = `0 ${timerW / 26}px 0 0`; // change to fraction (of something)
+  play.style.margin = `0 ${timerW / 26}px 0 0`;
 
   document.getElementById('bottomControlsBox').appendChild(reset);
-  reset.style.margin = `0 ${timerW / 23}px 0 0`; // change to fraction (of something)
+  reset.style.margin = `0 ${timerW / 23}px 0 0`;
+
+  document.getElementById('topSettingsHourBox').appendChild(increment1);
+  increment1.style.width = '100%';
+  increment1.style.backgroundColor = onDutyColor;
+  increment1.style.display = 'block';
+
+  document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
+  topHourSetText.style.textAlign = 'center';
+  topHourSetText.innerHTML = "0";
+  topHourSetText.style.display = 'block';
+  topHourSetText.style.color = onDutyColor;
+  topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('topSettingsHourBox').appendChild(increment2);
+  increment2.style.width = '100%';
+  increment2.style.backgroundColor = onDutyColor;
+  increment2.style.display = 'block';
+  increment2.style.transform = 'rotate(180deg)';
+  increment2.style.margin = `${timerH / 105}px 0 0 0`;
+
+  topSettingsHTextBox.style.width = `${timerW / 10}px`;
+  topSettingsHTextBox.style.height = `${textH}px`;
+
+  topSettingsHText.style.textAlign = 'left';
+  topSettingsHText.innerHTML = "h";
+  topSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
+  topSettingsHText.style.color = onDutyColor;
+
+  document.getElementById('topSettingsTenBox').appendChild(increment3);
+  increment3.style.width = '100%';
+  increment3.style.backgroundColor = onDutyColor;
+  increment3.style.display = 'block';
+
+  document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
+  topTenSetText.style.textAlign = 'center';
+  topTenSetText.innerHTML = "2";
+  topTenSetText.style.display = 'block';
+  topTenSetText.style.color = onDutyColor;
+  topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('topSettingsTenBox').appendChild(increment4);
+  increment4.style.width = '100%';
+  increment4.style.backgroundColor = onDutyColor;
+  increment4.style.display = 'block';
+  increment4.style.transform = 'rotate(180deg)';
+  increment4.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('topSettingsMinBox').appendChild(increment5);
+  increment5.style.width = '100%';
+  increment5.style.backgroundColor = onDutyColor;
+  increment5.style.display = 'block';
+
+  document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
+  topMinSetText.style.textAlign = 'center';
+  topMinSetText.innerHTML = "5";
+  topMinSetText.style.display = 'block';
+  topMinSetText.style.color = onDutyColor;
+  topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('topSettingsMinBox').appendChild(increment6);
+  increment6.style.width = '100%';
+  increment6.style.backgroundColor = onDutyColor;
+  increment6.style.display = 'block';
+  increment6.style.transform = 'rotate(180deg)';
+  increment6.style.margin = `${timerH / 105}px 0 0 0`;
+
+  topSettingsMinTextBox.style.width = `${timerW / 24}px`;
+  topSettingsMinTextBox.style.height = `${textH}px`;
+
+  topSettingsMinText.style.textAlign = 'right';
+  topSettingsMinText.innerHTML = "m";
+  //topSettingsMinText.style.margin = `0 0 0 ${timerW / 75}px`;
+  topSettingsMinText.style.color = onDutyColor;
+
 
   // kept for reference...
   /*if (mobile === false && maximize === false) {
@@ -273,43 +364,42 @@ let mainDisplayBgColor = "black";
 let settingsDispBbgColor = "black";
 let bodyColor = "#c0daf1"; // default text color (used in displays)
 let settingsColor = "hsl(28, 100%, 55%)";
-let onDutyColor = "hsl(215, 100%, 55%)";
-let offDutyColor = "hsl(104, 60%, 55%)";
+let onDutyColor = "hsl(215, 100%, 60%)";
+let offDutyColor = "hsl(104, 60%, 45%)";
 
 let body = document.getElementsByTagName('body')[0];
-let topDisplay = document.getElementById('topDisplay');
-let mainDisplay = document.getElementById('mainDisplay');
-let settingsDisplay = document.getElementById('settingsDisplay');
-let bottomDisplay = document.getElementById('bottomDisplay');
-let container = document.getElementById('container');
-let lineTopL = document.getElementById('lineTopL');
-let lineTopR = document.getElementById('lineTopR');
-let titleTextBox = document.getElementById('titleTextBox');
-let titleText = document.getElementById('titleText');
-let lineBottomL = document.getElementById('lineBottomL');
-let lineBottomR = document.getElementById('lineBottomR');
-let bottomControlsBox = document.getElementById('bottomControlsBox');
-let topSettingsContainer = document.getElementById('topSettingsContainer');
-let bottomSettingsContainer = document.getElementById('bottomSettingsContainer');
-let topSettingsTextBox = document.getElementById('topSettingsTextBox');
-let topSettingsText = document.getElementById('topSettingsText');
-let bottomSettingsTextBox = document.getElementById('bottomSettingsTextBox');
-let bottomSettingsText = document.getElementById('bottomSettingsText');
-
+let topHourSetText = document.createElement("p");
+let topTenSetText = document.createElement("p");
+let topMinSetText = document.createElement("p");
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
 let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
+let increment1 = document.createElement('img');
+increment1.src = 'img/incrMask.png';
+let increment2 = document.createElement('img');
+increment2.src = 'img/incrMask.png';
+let increment3 = document.createElement('img');
+increment3.src = 'img/incrMask.png';
+let increment4 = document.createElement('img');
+increment4.src = 'img/incrMask.png';
+let increment5 = document.createElement('img');
+increment5.src = 'img/incrMask.png';
+let increment6 = document.createElement('img');
+increment6.src = 'img/incrMask.png';
 
-let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR, bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox];
+let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
+  bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox, topSettingsHourBox,
+  topSettingsHTextBox,topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
 let buttons = [play, reset];
-let text = [titleText, topSettingsText, bottomSettingsText];
+let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
+  topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText];
 
 // Toggle visible backgrounds for 3 divs in container
-let editColor = true;
+let editColor = false;
 
-if (editColor == false) {
+if (editColor == true) {
   containerBgColor = "#101519";
   bodyBgColor = "#110f0b";
   mainDisplayBgColor = "#0f0d09";
