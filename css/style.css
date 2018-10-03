@@ -17,8 +17,3 @@ body {
                                   supported by Chrome and Opera */
   fontFamily: 'Ubuntu Mono', monospace;
 }
-
-sup {
-    vertical-align: super;
-    font-size: 60%;
-}
