@@ -24,6 +24,11 @@ function setLayout() {
     }
   }
 
+// put conditional here based on AREA (for desktops)
+// if window area is smaller than default size (+ a bit for margin)
+// then define new timer dimensions ;-) (Take care to prioritize correct axis)
+// mobile remains: timer dimensions = window dimensions (-bit for margins)
+
   winRatio = timerW / timerH;
 
   if (winRatio < 1.2) {
@@ -72,88 +77,128 @@ function stylePage() {
     }
   }
 
+  function styleButons(buttons) {
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].style.height = '100%';
+      buttons[i].style.backgroundColor = settingsColor;
+      buttons[i].style.display = 'inline-block';
+      buttons[i].style.verticalAlign = 'top';
+    }
+  }
+
+  function styleText(text) {
+    for (let i = 0; i < text.length; i++) {
+      text[i].style.textAlign = 'center';
+      text[i].style.fontSize = `${textH}px`;
+      text[i].style.lineHeight = `${textH}px`;
+    }
+  }
+
   if (layout === "portrait") {
-    fontSizeA = timerW / 10;
-    fontSizeB = timerW / 23;
-  } else if (layout === "landscape") {
-    lineH = topDisplayH * 0.05;
-    topLineW = timerW * 0.285;
+
+  } else if (layout === "landscape") { // only working on this, atm.
+    lineH = topDisplayH * 0.043;
+    topLineW = timerW * 0.255;
     bottomLineW = timerW * 0.35;
     lineTopVert = (topDisplayH - lineH) / 2;
-    topTextH = topDisplayH / 3;
-    fontSizeA = timerH / 7.8;
-    fontSizeB = timerH / 18;
+    textH = topDisplayH / 2.5; // ?change to 'textH'?
   } else {
-    fontSizeA = timerH / 6;
-    fontSizeB = timerH / 16;
+
+  }
+
+  if (settingsMode = true) {
+    mainDisplay.style.display = 'none';
+    settingsDisplay.style.display = 'block';
+  } else {
+    settingsDisplay.style.display = 'none';
+    mainDisplay.style.display = 'block';
   }
 
   topDisplay.style.height= `${topDisplayH}px`;
   mainDisplay.style.height = `${mainDisplayH}px`;
+  settingsDisplay.style.height = `${mainDisplayH}px`;
   bottomDisplay.style.height= `${bottomDisplayH}px`;
 
   topDisplay.style.lineHeight = `${topDisplayH}px`;
   bottomDisplay.style.lineHeight = `${bottomDisplayH}px`;
+  topSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
+  bottomSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
 
-  styleDefaults(defaultItems);
+  styleDefaults(defaultItems); // includes lines
   styleLines(lines);
+  styleButons(buttons);
+  styleText(text);
 
+
+  bottomDisplay.style.textAlign = "right";
+
+  // This block can all be set to 'black' when layout finalized -------------
+  body.style.color = bodyColor;
   container.style.backgroundColor = containerBgColor;
   topDisplay.style.backgroundColor = dispBbgColor;
+  settingsDisplay.style.backgroundColor = settingsDispBbgColor;
   mainDisplay.style.backgroundColor = mainDisplayBgColor;
   body.style.background = bodyBgColor;
+  bottomDisplay.style.backgroundColor = dispAbgColor;
+  bottomControlsBox.style.backgroundColor = mainDisplayBgColor;
+  titleTextBox.style.backgroundColor = mainDisplayBgColor;
+  topSettingsContainer.style.backgroundColor = mainDisplayBgColor;
+  bottomSettingsContainer.style.backgroundColor = settingsDispBbgColor;
+  topSettingsTextBox.style.backgroundColor = settingsDispBbgColor;
+  bottomSettingsTextBox.style.backgroundColor = mainDisplayBgColor;
+  // ------------------------------------------------------------------------
 
   lineTopL.style.width = `${topLineW}px`;
-  lineTopL.style.left = '0px';
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
-  topTextBox.style.width = `${timerW - (topLineW * 2)}px`;
-  topTextBox.style.height = `${topTextH}px`;
-  topTextBox.style.backgroundColor = mainDisplayBgColor;
+  titleTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  titleTextBox.style.height = `${textH}px`;
 
-  topText.innerHTML = "DUTY SETTINGS";
-  topText.style.textAlign = 'center';
-  topText.style.lineHeight = `${topTextH}px`;
-  topText.style.color = settingsColor;
-  topText.style.fontSize = `${topTextH}px`;
+  titleText.innerHTML = "DUTY SETTINGS";
+  titleText.style.color = settingsColor;
 
   lineTopR.style.width = `${topLineW}px`;
   lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
+  topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+  bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+
+  topSettingsTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  topSettingsTextBox.style.height = `${textH}px`;
+
+  topSettingsText.innerHTML = "ON DUTY:";
+  topSettingsText.style.color = onDutyColor;
+
+  bottomSettingsTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  bottomSettingsTextBox.style.height = `${textH}px`;
+
+  bottomSettingsText.innerHTML = "OFF DUTY:";
+  bottomSettingsText.style.color = offDutyColor;
 
   lineBottomL.style.width = `${bottomLineW}px`;
-  lineBottomL.style.left = '0px';
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
   bottomControlsBox.style.width = `${timerW - (bottomLineW * 2)}px`;
-  bottomControlsBox.style.height = `${topTextH * 2}px`;
-  bottomControlsBox.style.backgroundColor = mainDisplayBgColor;
+  bottomControlsBox.style.height = `${textH * 1.5}px`;
 
   lineBottomR.style.width = `${bottomLineW}px`;
   lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
 
   document.getElementById('bottomControlsBox').appendChild(play);
-  play.style.backgroundColor = settingsColor;
-  play.style.display = 'inline-block';
-  play.style.height = '100%';
-  play.style.verticalAlign = 'top';
-  play.style.margin = '0 15px 0 0'; // change to fraction (of something)
+  play.style.margin = `0 ${timerW / 26}px 0 0`; // change to fraction (of something)
 
   document.getElementById('bottomControlsBox').appendChild(reset);
-  reset.style.backgroundColor = settingsColor;
-  reset.style.display = 'inline-block';
-  reset.style.height = '100%';
-  reset.style.verticalAlign = 'top';
-  reset.style.margin = '0 20px 0 0'; // change to fraction (of something)
+  reset.style.margin = `0 ${timerW / 23}px 0 0`; // change to fraction (of something)
 
-  if (mobile === false && maximize === false) {
+  // kept for reference...
+  /*if (mobile === false && maximize === false) {
     container.style.webkitBoxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
     container.style.mozBoxShadow =  "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
     container.style.boxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
-  }
+  }*/
 }
 
-function toggleMaxLayout() {
+function toggleMaxLayout() { // Improve by checking window v display size on mobile
   if (maximize === false) {
     maximize = true;
     if (mobile === true) {
@@ -208,6 +253,7 @@ let mobile = false;
 let layout = "portrait"; // 3 options: portrait, landscape, landscapeLong
 let maximize = false;
 let fullscrn = false;
+let settingsMode = true;
 
 let bottomDisplayH = 0;
 let topDisplayH = 0;
@@ -217,62 +263,65 @@ let lineH = 0;
 let topLineW = 0;
 let bottomLineW = 0;
 let lineTopVert = 0;
-let topTextH = 0;
-
-let fontSizeA = 0;
-let fontSizeB = 0;
-
-// maximum string lengths for secondary display (topDisplay):
-let maxCharsPortrait = 39;
-let maxCharsLandscape = 41;
-let maxCharsLandsLong = 66;
+let textH = 0;
 
 let dispBbgColor = "black";
 let dispAbgColor = "black";
 let containerBgColor = "black";
 let bodyBgColor = "black";
 let mainDisplayBgColor = "black";
+let settingsDispBbgColor = "black";
 let bodyColor = "#c0daf1"; // default text color (used in displays)
-let settingsColor = "hsl(28, 100%, 55%)"
+let settingsColor = "hsl(28, 100%, 55%)";
+let onDutyColor = "hsl(215, 100%, 55%)";
+let offDutyColor = "hsl(104, 60%, 55%)";
 
 let body = document.getElementsByTagName('body')[0];
-let para = document.getElementsByTagName('p')[0];
-let bottomDisplay = document.getElementById('bottomDisplay');
 let topDisplay = document.getElementById('topDisplay');
-//let bottomDisplayText = document.getElementById('bottomDisplayText');
-//let topDisplayText = document.getElementById('topDisplayText');
+let mainDisplay = document.getElementById('mainDisplay');
+let settingsDisplay = document.getElementById('settingsDisplay');
+let bottomDisplay = document.getElementById('bottomDisplay');
 let container = document.getElementById('container');
 let lineTopL = document.getElementById('lineTopL');
 let lineTopR = document.getElementById('lineTopR');
-let topTextBox = document.getElementById('topTextBox');
-let topText = document.getElementById('topText');
+let titleTextBox = document.getElementById('titleTextBox');
+let titleText = document.getElementById('titleText');
 let lineBottomL = document.getElementById('lineBottomL');
 let lineBottomR = document.getElementById('lineBottomR');
 let bottomControlsBox = document.getElementById('bottomControlsBox');
+let topSettingsContainer = document.getElementById('topSettingsContainer');
+let bottomSettingsContainer = document.getElementById('bottomSettingsContainer');
+let topSettingsTextBox = document.getElementById('topSettingsTextBox');
+let topSettingsText = document.getElementById('topSettingsText');
+let bottomSettingsTextBox = document.getElementById('bottomSettingsTextBox');
+let bottomSettingsText = document.getElementById('bottomSettingsText');
 
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
 let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
 
-let defaultItems = [lineTopL, lineTopR, topTextBox, lineBottomL, lineBottomR, bottomControlsBox];
+let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR, bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
+let buttons = [play, reset];
+let text = [titleText, topSettingsText, bottomSettingsText];
 
 // Toggle visible backgrounds for 3 divs in container
-let devColor = true;
+let editColor = true;
 
-if (devColor == false) {
+if (editColor == false) {
   containerBgColor = "#101519";
   bodyBgColor = "#110f0b";
   mainDisplayBgColor = "#0f0d09";
+  settingsDispBbgColor = '#1c1810';
 }
 
-body.style.color = bodyColor;
 body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
 container.style.margin = "auto";
-topDisplay.style.textAlign = "right";
-bottomDisplay.style.backgroundColor = dispAbgColor;
-bottomDisplay.style.textAlign = "right";
+
+// separate setting styles (that don't change dynamically) from layouts,
+// which do change dynamically. Pull out of drawPage() into new
+// method 'stylePage()' [Cannot include any sizes relative to dimensions]
 
 drawPage(); // Also called whenever window (body) is resized
