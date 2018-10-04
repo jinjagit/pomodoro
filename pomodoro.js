@@ -27,9 +27,9 @@ function setLayout() {
 // winRatio = timerW / timerH;
 
   layout = "landscape";
-  topDisplayH = timerH * (2 / 11);
+  topDisplayH = timerH * (1.7 / 11);
   mainDisplayH = timerH * (7 / 11);
-  bottomDisplayH = timerH * (2 / 11);
+  bottomDisplayH = timerH * (2.3 / 11);
 }
 
 function drawPage() {
@@ -108,11 +108,11 @@ function stylePage() {
     }
   }
 
-  lineH = topDisplayH * 0.043;
+  lineH = topDisplayH * 0.045;
   topLineW = timerW * 0.255;
   bottomLineW = timerW * 0.3;
   lineTopVert = (topDisplayH - lineH) / 2;
-  textH = topDisplayH / 2.5; // ?change to 'textH'?
+  textH = topDisplayH / 2.2; // ?change to 'textH'?
 
   if (settingsMode = true) {
     timerDisplay.style.display = 'none';
