@@ -79,6 +79,8 @@ function stylePage() {
       incrBtns[i].style.display = 'block';
       if (i < 6) {
         incrBtns[i].style.backgroundColor = onDutyColor;
+      } else {
+        incrBtns[i].style.backgroundColor = offDutyColor;
       }
       if ( i % 2 == 1) {
         incrBtns[i].style.transform = 'rotate(180deg)';
@@ -91,7 +93,11 @@ function stylePage() {
     for (let i = 0; i < settingsText.length; i++) {
       settingsText[i].style.textAlign = 'center';
       settingsText[i].style.display = 'block';
-      settingsText[i].style.color = onDutyColor;
+      if (i < 3) {
+        settingsText[i].style.color = onDutyColor;
+      } else {
+        settingsText[i].style.color = offDutyColor;
+      }
     }
   }
 
@@ -109,15 +115,15 @@ function stylePage() {
   textH = topDisplayH / 2.5; // ?change to 'textH'?
 
   if (settingsMode = true) {
-    mainDisplay.style.display = 'none';
+    timerDisplay.style.display = 'none';
     settingsDisplay.style.display = 'block';
   } else {
     settingsDisplay.style.display = 'none';
-    mainDisplay.style.display = 'block';
+    timerDisplay.style.display = 'block';
   }
 
   topDisplay.style.height= `${topDisplayH}px`;
-  mainDisplay.style.height = `${mainDisplayH}px`;
+  timerDisplay.style.height = `${mainDisplayH}px`;
   settingsDisplay.style.height = `${mainDisplayH}px`;
   bottomDisplay.style.height= `${bottomDisplayH}px`;
 
@@ -140,7 +146,7 @@ function stylePage() {
   container.style.backgroundColor = containerBgColor;
   topDisplay.style.backgroundColor = dispBbgColor;
   settingsDisplay.style.backgroundColor = settingsDispBbgColor;
-  mainDisplay.style.backgroundColor = mainDisplayBgColor;
+  timerDisplay.style.backgroundColor = mainDisplayBgColor;
   body.style.background = bodyBgColor;
   bottomDisplay.style.backgroundColor = dispAbgColor;
   bottomControlsBox.style.backgroundColor = mainDisplayBgColor;
@@ -154,8 +160,14 @@ function stylePage() {
   topSettingsTenBox.style.backgroundColor = settingsDispBbgColor;
   topSettingsMinBox.style.backgroundColor = settingsDispBbgColor;
   topSettingsMinTextBox.style.backgroundColor = settingsDispBbgColor;
+  bottomSettingsHourBox.style.backgroundColor = mainDisplayBgColor;
+  bottomSettingsHTextBox.style.backgroundColor = mainDisplayBgColor;
+  bottomSettingsTenBox.style.backgroundColor = mainDisplayBgColor;
+  bottomSettingsMinBox.style.backgroundColor = mainDisplayBgColor;
+  bottomSettingsMinTextBox.style.backgroundColor = mainDisplayBgColor;
   // ------------------------------------------------------------------------
 
+  //      Settings 'display', 'header' & 'footer' ...........................
   lineTopL.style.width = `${topLineW}px`;
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
@@ -167,32 +179,6 @@ function stylePage() {
 
   lineTopR.style.width = `${topLineW}px`;
   lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
-
-  topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
-  bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
-
-  topSettingsTextBox.style.width = `${timerW / 2.25}px`;
-
-  topSettingsText.style.textAlign = 'right';
-  topSettingsText.innerHTML = "ON DUTY:";
-  topSettingsText.style.color = onDutyColor;
-  topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
-
-  bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
-
-  topSettingsHourBox.style.width = `${timerW / 13}px`;
-  topSettingsHourBox.style.height = `${textH * 3}px`;
-
-  topSettingsTenBox.style.width = `${timerW / 13}px`;
-  topSettingsTenBox.style.height = `${textH * 3}px`;
-
-  topSettingsMinBox.style.width = `${timerW / 13}px`;
-  topSettingsMinBox.style.height = `${textH * 3}px`;
-
-  bottomSettingsText.style.textAlign = 'right';
-  bottomSettingsText.innerHTML = "OFF DUTY:";
-  bottomSettingsText.style.color = offDutyColor;
-  bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
   lineBottomL.style.width = `${bottomLineW}px`;
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
@@ -211,6 +197,32 @@ function stylePage() {
 
   document.getElementById('bottomControlsBox').appendChild(play);
   play.style.margin = `0 ${timerW / 24}px 0 0`;
+
+  //      Settings container contents .......................................
+  topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+  bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+
+  topSettingsTextBox.style.width = `${timerW / 2.25}px`;
+  bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
+
+  topSettingsText.style.textAlign = 'right';
+  topSettingsText.innerHTML = "ON DUTY:";
+  topSettingsText.style.color = onDutyColor;
+  topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
+
+  bottomSettingsText.style.textAlign = 'right';
+  bottomSettingsText.innerHTML = "OFF DUTY:";
+  bottomSettingsText.style.color = offDutyColor;
+  bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
+
+  topSettingsHourBox.style.width = `${timerW / 13}px`;
+  topSettingsHourBox.style.height = `${textH * 3}px`;
+
+  topSettingsTenBox.style.width = `${timerW / 13}px`;
+  topSettingsTenBox.style.height = `${textH * 3}px`;
+
+  topSettingsMinBox.style.width = `${timerW / 13}px`;
+  topSettingsMinBox.style.height = `${textH * 3}px`;
 
   document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
 
@@ -248,6 +260,52 @@ function stylePage() {
   topSettingsMinText.style.textAlign = 'right';
   topSettingsMinText.innerHTML = "m";
   topSettingsMinText.style.color = onDutyColor;
+
+  bottomSettingsHourBox.style.width = `${timerW / 13}px`;
+  bottomSettingsHourBox.style.height = `${textH * 3}px`;
+
+  bottomSettingsTenBox.style.width = `${timerW / 13}px`;
+  bottomSettingsTenBox.style.height = `${textH * 3}px`;
+
+  bottomSettingsMinBox.style.width = `${timerW / 13}px`;
+  bottomSettingsMinBox.style.height = `${textH * 3}px`;
+
+  document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
+
+  document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
+  bottomHourSetText.innerHTML = "0";
+  bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
+
+  bottomSettingsHTextBox.style.width = `${timerW / 10}px`;
+
+  bottomSettingsHText.style.textAlign = 'left';
+  bottomSettingsHText.innerHTML = "h";
+  bottomSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
+  bottomSettingsHText.style.color = offDutyColor;
+
+  document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
+
+  document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
+  bottomTenSetText.innerHTML = "0";
+  bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
+
+  document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
+
+  document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
+  bottomMinSetText.innerHTML = "5";
+  bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
+
+  document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
+
+  bottomSettingsMinTextBox.style.width = `${timerW / 24}px`;
+
+  bottomSettingsMinText.style.textAlign = 'right';
+  bottomSettingsMinText.innerHTML = "m";
+  bottomSettingsMinText.style.color = offDutyColor;
 
 }
 
@@ -288,6 +346,9 @@ let body = document.getElementsByTagName('body')[0];
 let topHourSetText = document.createElement("p");
 let topTenSetText = document.createElement("p");
 let topMinSetText = document.createElement("p");
+let bottomHourSetText = document.createElement("p");
+let bottomTenSetText = document.createElement("p");
+let bottomMinSetText = document.createElement("p");
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
 let reset = document.createElement('img');
@@ -296,21 +357,28 @@ let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
 
 let incrBtns = [];
-for (i = 0; i < 6; i++) {
+for (i = 0; i < 12; i++) {
   incrBtns[i] = document.createElement('img');
   incrBtns[i].src = 'img/incrMask.png';
 }
 
 let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
-  bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox, topSettingsHourBox,
-  topSettingsHTextBox, topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox];
+    bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox,
+    topSettingsHourBox, topSettingsHTextBox, topSettingsTenBox,
+    topSettingsMinBox, topSettingsMinTextBox, bottomSettingsHourBox,
+    bottomSettingsHTextBox, bottomSettingsTenBox, bottomSettingsMinBox,
+    bottomSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
 let buttons = [play, reset, soundOn];
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
-  topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText];
-let settingsText = [topHourSetText, topTenSetText, topMinSetText];
+    topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText,
+    bottomHourSetText, bottomSettingsHText, bottomTenSetText, bottomMinSetText,
+    bottomSettingsMinText];
+let settingsText = [topHourSetText, topTenSetText, topMinSetText,
+    bottomHourSetText, bottomTenSetText, bottomMinSetText];
 let textBoxes = [titleTextBox, topSettingsTextBox, bottomSettingsTextBox,
-  topSettingsHTextBox, topSettingsMinTextBox];
+    topSettingsHTextBox, topSettingsMinTextBox, bottomSettingsHTextBox,
+    bottomSettingsMinTextBox];
 
 // Toggle visible backgrounds for divs (for use in development)
 let editColor = false;
@@ -326,8 +394,11 @@ body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
 container.style.margin = "auto";
 
-// separate setting styles (that don't change dynamically) from layouts,
-// which do change dynamically. Pull out of drawPage() into new
+// ?separate setting styles (that don't change dynamically) from layouts,
+// which do change dynamically? Pull out of drawPage() into new
 // method 'stylePage()' [Cannot include any sizes relative to dimensions]
+// Note: ALMOST everything is dynamic, in that almost every element can change
+// any of its properties in some circumstance (change; mode, size, etc.).
+// Perhaps only appendchild statements can be run just once at start?
 
 drawPage(); // Also called whenever window (body) is resized
