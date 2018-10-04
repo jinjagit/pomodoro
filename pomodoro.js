@@ -7,21 +7,16 @@ function getDisplayData() {
   timerH = window.innerHeight;
   WinOutH = window.outerHeight;
   screenH = screen.height;
-
-  if (screen.width < window.innerWidth || fullscrn === true) {
-    mobile = true; // probably mobile, but not a foolproof method
-  } else {mobile = false;}
 }
 
 function setLayout() {
-  if (mobile === false && maximize === false) {
-    if (screenW < 2200) {
-      if (timerW > 480) { timerW = 480; }
-      if (timerH > 385) { timerH = 385; }
-    } else if (screenW < 4400) {
-      if (timerW > 720) { timerW = 720; }
-      if (timerH > 578) { timerH = 578; }
-    }
+
+  if (screenW < 2200) {
+    if (timerW > 480) { timerW = 480; }
+    if (timerH > 385) { timerH = 385; }
+  } else if (screenW < 4400) {
+    if (timerW > 720) { timerW = 720; }
+    if (timerH > 578) { timerH = 578; }
   }
 
 // put conditional here based on AREA (for desktops)
@@ -29,35 +24,20 @@ function setLayout() {
 // then define new timer dimensions ;-) (Take care to prioritize correct axis)
 // mobile remains: timer dimensions = window dimensions (-bit for margins)
 
-  winRatio = timerW / timerH;
+// winRatio = timerW / timerH;
 
-  if (winRatio < 1.2) {
-    layout = "portrait";
-    topDisplayH = timerH * (2 / 15);
-    mainDisplayH = timerH * (11 / 15);
-    bottomDisplayH = timerH * (2 / 15);
-  } else if (winRatio >= 1.2 && winRatio < 2.1) { // favored desktop layout
-    layout = "landscape";
-    topDisplayH = timerH * (2 / 11);
-    mainDisplayH = timerH * (7 / 11);
-    bottomDisplayH = timerH * (2 / 11);
-  } else {
-    layout = "landscapeLong";
-    topDisplayH = timerH * (1 / 9);
-    mainDisplayH = timerH * (7 / 9);
-    bottomDisplayH = timerH * (1 / 9);
-  }
+  layout = "landscape";
+  topDisplayH = timerH * (2 / 11);
+  mainDisplayH = timerH * (7 / 11);
+  bottomDisplayH = timerH * (2 / 11);
 }
 
 function drawPage() {
   getDisplayData();
   setLayout();
   container.style.width = `${timerW}px`;
-  if (mobile === false) {
-    container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
-  } else {
-    container.style.margin = `auto`;
-  }
+  container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
+
   input = "";
   stylePage();
 }
@@ -93,17 +73,40 @@ function stylePage() {
     }
   }
 
-  if (layout === "portrait") {
-
-  } else if (layout === "landscape") { // only working on this, atm.
-    lineH = topDisplayH * 0.043;
-    topLineW = timerW * 0.255;
-    bottomLineW = timerW * 0.3;
-    lineTopVert = (topDisplayH - lineH) / 2;
-    textH = topDisplayH / 2.5; // ?change to 'textH'?
-  } else {
-
+  function styleIncrBtns(incrBtns) {
+    for (let i = 0; i < incrBtns.length; i++) {
+      incrBtns[i].style.width = '100%';
+      incrBtns[i].style.display = 'block';
+      if (i < 6) {
+        incrBtns[i].style.backgroundColor = onDutyColor;
+      }
+      if ( i % 2 == 1) {
+        incrBtns[i].style.transform = 'rotate(180deg)';
+        incrBtns[i].style.margin = `${timerH / 105}px 0 0 0`;
+      }
+    }
   }
+
+  function styleSettingsText(settingsText) {
+    for (let i = 0; i < settingsText.length; i++) {
+      settingsText[i].style.textAlign = 'center';
+      settingsText[i].style.display = 'block';
+      settingsText[i].style.color = onDutyColor;
+    }
+  }
+
+  function styleTextBoxes(textBoxes) {
+    for (let i = 0; i < textBoxes.length; i++) {
+      textBoxes[i].style.height = `${textH}px`;
+
+    }
+  }
+
+  lineH = topDisplayH * 0.043;
+  topLineW = timerW * 0.255;
+  bottomLineW = timerW * 0.3;
+  lineTopVert = (topDisplayH - lineH) / 2;
+  textH = topDisplayH / 2.5; // ?change to 'textH'?
 
   if (settingsMode = true) {
     mainDisplay.style.display = 'none';
@@ -127,11 +130,13 @@ function stylePage() {
   styleLines(lines);
   styleButons(buttons);
   styleText(text);
+  styleIncrBtns(incrBtns);
+  styleSettingsText(settingsText);
+  styleTextBoxes(textBoxes);
 
   bottomDisplay.style.textAlign = "right";
 
   // This block can all be set to 'black' when layout finalized -------------
-  body.style.color = bodyColor;
   container.style.backgroundColor = containerBgColor;
   topDisplay.style.backgroundColor = dispBbgColor;
   settingsDisplay.style.backgroundColor = settingsDispBbgColor;
@@ -155,7 +160,6 @@ function stylePage() {
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
   titleTextBox.style.width = `${timerW - (topLineW * 2)}px`;
-  titleTextBox.style.height = `${textH}px`;
 
   titleText.style.textAlign = 'center';
   titleText.innerHTML = "DUTY SETTINGS";
@@ -168,7 +172,6 @@ function stylePage() {
   bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
 
   topSettingsTextBox.style.width = `${timerW / 2.25}px`;
-  topSettingsTextBox.style.height = `${textH}px`;
 
   topSettingsText.style.textAlign = 'right';
   topSettingsText.innerHTML = "ON DUTY:";
@@ -176,7 +179,6 @@ function stylePage() {
   topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
   bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
-  bottomSettingsTextBox.style.height = `${textH}px`;
 
   topSettingsHourBox.style.width = `${timerW / 13}px`;
   topSettingsHourBox.style.height = `${textH * 3}px`;
@@ -210,129 +212,45 @@ function stylePage() {
   document.getElementById('bottomControlsBox').appendChild(play);
   play.style.margin = `0 ${timerW / 24}px 0 0`;
 
-  document.getElementById('topSettingsHourBox').appendChild(increment1);
-  increment1.style.width = '100%';
-  increment1.style.backgroundColor = onDutyColor;
-  increment1.style.display = 'block';
+  document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
 
   document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
-  topHourSetText.style.textAlign = 'center';
   topHourSetText.innerHTML = "0";
-  topHourSetText.style.display = 'block';
-  topHourSetText.style.color = onDutyColor;
   topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsHourBox').appendChild(increment2);
-  increment2.style.width = '100%';
-  increment2.style.backgroundColor = onDutyColor;
-  increment2.style.display = 'block';
-  increment2.style.transform = 'rotate(180deg)';
-  increment2.style.margin = `${timerH / 105}px 0 0 0`;
+  document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
 
   topSettingsHTextBox.style.width = `${timerW / 10}px`;
-  topSettingsHTextBox.style.height = `${textH}px`;
 
   topSettingsHText.style.textAlign = 'left';
   topSettingsHText.innerHTML = "h";
   topSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
   topSettingsHText.style.color = onDutyColor;
 
-  document.getElementById('topSettingsTenBox').appendChild(increment3);
-  increment3.style.width = '100%';
-  increment3.style.backgroundColor = onDutyColor;
-  increment3.style.display = 'block';
+  document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
 
   document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
-  topTenSetText.style.textAlign = 'center';
   topTenSetText.innerHTML = "2";
-  topTenSetText.style.display = 'block';
-  topTenSetText.style.color = onDutyColor;
   topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsTenBox').appendChild(increment4);
-  increment4.style.width = '100%';
-  increment4.style.backgroundColor = onDutyColor;
-  increment4.style.display = 'block';
-  increment4.style.transform = 'rotate(180deg)';
-  increment4.style.margin = `${timerH / 105}px 0 0 0`;
+  document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
 
-  document.getElementById('topSettingsMinBox').appendChild(increment5);
-  increment5.style.width = '100%';
-  increment5.style.backgroundColor = onDutyColor;
-  increment5.style.display = 'block';
+  document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
 
   document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
-  topMinSetText.style.textAlign = 'center';
   topMinSetText.innerHTML = "5";
-  topMinSetText.style.display = 'block';
-  topMinSetText.style.color = onDutyColor;
   topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsMinBox').appendChild(increment6);
-  increment6.style.width = '100%';
-  increment6.style.backgroundColor = onDutyColor;
-  increment6.style.display = 'block';
-  increment6.style.transform = 'rotate(180deg)';
-  increment6.style.margin = `${timerH / 105}px 0 0 0`;
+  document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
 
   topSettingsMinTextBox.style.width = `${timerW / 24}px`;
-  topSettingsMinTextBox.style.height = `${textH}px`;
 
   topSettingsMinText.style.textAlign = 'right';
   topSettingsMinText.innerHTML = "m";
-  //topSettingsMinText.style.margin = `0 0 0 ${timerW / 75}px`;
   topSettingsMinText.style.color = onDutyColor;
 
-
-  // kept for reference...
-  /*if (mobile === false && maximize === false) {
-    container.style.webkitBoxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
-    container.style.mozBoxShadow =  "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
-    container.style.boxShadow = "2px 2px 17px 2px rgba(0, 0, 0, 0.4)";
-  }*/
 }
 
-function toggleMaxLayout() { // Improve by checking window v display size on mobile
-  if (maximize === false) {
-    maximize = true;
-    if (mobile === true) {
-      goFullscreen();
-    }
-  } else {
-    maximize = false;
-    if (mobile === true) {
-      exitFullscreen();
-    }
-  }
-  drawPage();
-}
-
-function goFullscreen() {
-  let elem = document.documentElement;
-  if (elem.requestFullscreen) {
-    elem.requestFullscreen();
-  } else if (elem.mozRequestFullScreen) { /* Firefox */
-    elem.mozRequestFullScreen();
-  } else if (elem.webkitRequestFullscreen) { /* Chrome, Safari and Opera */
-    elem.webkitRequestFullscreen();
-  } else if (elem.msRequestFullscreen) { /* IE/Edge */
-    elem.msRequestFullscreen();
-  }
-  fullscrn = true;
-}
-
-function exitFullscreen() {
-  if (document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if (document.mozCancelFullScreen) { /* Firefox */
-    document.mozCancelFullScreen();
-  } else if (document.webkitExitFullscreen) { /* Chrome, Safari and Opera */
-    document.webkitExitFullscreen();
-  } else if (document.msExitFullscreen) { /* IE/Edge */
-    document.msExitFullscreen();
-  }
-  fullscrn = false;
-}
 
 // ---------- initial declarations and commands -------------
 
@@ -343,10 +261,7 @@ let timerH = 0;
 let WinOutH = 0;
 let screenH = 0;
 let winRatio = 0;
-let mobile = false;
-let layout = "portrait"; // 3 options: portrait, landscape, landscapeLong
-let maximize = false;
-let fullscrn = false;
+
 let settingsMode = true;
 
 let bottomDisplayH = 0;
@@ -365,7 +280,6 @@ let containerBgColor = "black";
 let bodyBgColor = "black";
 let mainDisplayBgColor = "black";
 let settingsDispBbgColor = "black";
-let bodyColor = "#c0daf1"; // default text color (used in displays)
 let settingsColor = "hsl(28, 100%, 55%)";
 let onDutyColor = "hsl(215, 100%, 60%)";
 let offDutyColor = "hsl(104, 60%, 45%)";
@@ -380,28 +294,25 @@ let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
 let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
-let increment1 = document.createElement('img');
-increment1.src = 'img/incrMask.png';
-let increment2 = document.createElement('img');
-increment2.src = 'img/incrMask.png';
-let increment3 = document.createElement('img');
-increment3.src = 'img/incrMask.png';
-let increment4 = document.createElement('img');
-increment4.src = 'img/incrMask.png';
-let increment5 = document.createElement('img');
-increment5.src = 'img/incrMask.png';
-let increment6 = document.createElement('img');
-increment6.src = 'img/incrMask.png';
+
+let incrBtns = [];
+for (i = 0; i < 6; i++) {
+  incrBtns[i] = document.createElement('img');
+  incrBtns[i].src = 'img/incrMask.png';
+}
 
 let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
   bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox, topSettingsHourBox,
-  topSettingsHTextBox,topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox];
+  topSettingsHTextBox, topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
 let buttons = [play, reset, soundOn];
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
   topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText];
+let settingsText = [topHourSetText, topTenSetText, topMinSetText];
+let textBoxes = [titleTextBox, topSettingsTextBox, bottomSettingsTextBox,
+  topSettingsHTextBox, topSettingsMinTextBox];
 
-// Toggle visible backgrounds for 3 divs in container
+// Toggle visible backgrounds for divs (for use in development)
 let editColor = false;
 
 if (editColor == true) {
