@@ -77,14 +77,15 @@ function stylePage() {
     for (let i = 0; i < incrBtns.length; i++) {
       incrBtns[i].style.width = '100%';
       incrBtns[i].style.display = 'block';
+
+
       if (i < 6) {
         incrBtns[i].style.backgroundColor = onDutyColor;
       } else {
         incrBtns[i].style.backgroundColor = offDutyColor;
       }
       if ( i % 2 == 1) {
-        incrBtns[i].style.transform = 'rotate(180deg)';
-        incrBtns[i].style.margin = `${timerH / 105}px 0 0 0`;
+        incrBtns[i].style.margin = `${timerH / 105.0}px 0 0 0`;
       }
     }
   }
@@ -394,7 +395,11 @@ soundOn.src = 'img/soundOnMask.png';
 let incrBtns = [];
 for (i = 0; i < 12; i++) {
   incrBtns[i] = document.createElement('img');
-  incrBtns[i].src = 'img/incrMask.png';
+  if (i % 2 == 0) {
+    incrBtns[i].src = 'img/incrUpMask.png';
+  } else {
+    incrBtns[i].src = 'img/incrDnMask.png';
+  }
   incrBtns[i].id = i.toString();
   incrBtns[i].addEventListener('mouseover', incrHover);
   incrBtns[i].addEventListener('mouseout', incrUnHover);
