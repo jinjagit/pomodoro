@@ -196,7 +196,7 @@ function stylePage() {
   reset.style.margin = `0 ${timerW / 30}px 0 0`;
 
   document.getElementById('bottomControlsBox').appendChild(play);
-  play.style.margin = `0 ${timerW / 24}px 0 0`;
+  play.style.margin = `0 ${timerW / 23}px 0 0`;
 
   //      Settings container contents .......................................
   topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
