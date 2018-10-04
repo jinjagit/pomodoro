@@ -309,6 +309,35 @@ function stylePage() {
 
 }
 
+// ---------- Button actions --------------------------------
+
+function btnHover() {
+  let thisID = this.id;
+  document.getElementById(`${thisID}`).style.backgroundColor = modeHoverColor;
+}
+
+function btnUnHover() {
+  let thisID = this.id;
+  document.getElementById(`${thisID}`).style.backgroundColor = modeColor;
+}
+
+function incrHover() {
+  let thisID = this.id;
+  if (parseInt(thisID) < 6) {
+    document.getElementById(`${thisID}`).style.backgroundColor = onDutyHoverColor;
+  } else {
+    document.getElementById(`${thisID}`).style.backgroundColor = offDutyHoverColor;
+  }
+}
+
+function incrUnHover() {
+  let thisID = this.id;
+  if (parseInt(thisID) < 6) {
+    document.getElementById(`${thisID}`).style.backgroundColor = onDutyColor;
+  } else {
+    document.getElementById(`${thisID}`).style.backgroundColor = offDutyColor;
+  }
+}
 
 // ---------- initial declarations and commands -------------
 
@@ -339,8 +368,14 @@ let bodyBgColor = "black";
 let mainDisplayBgColor = "black";
 let settingsDispBbgColor = "black";
 let settingsColor = "hsl(28, 100%, 55%)";
+let settingsHoverColor = "hsl(28, 100%, 35%)";
 let onDutyColor = "hsl(215, 100%, 60%)";
+let onDutyHoverColor = "hsl(215, 100%, 40%)";
 let offDutyColor = "hsl(104, 60%, 45%)";
+let offDutyHoverColor = "hsl(104, 60%, 25%)";
+
+let modeColor = settingsColor;
+let modeHoverColor = settingsHoverColor;
 
 let body = document.getElementsByTagName('body')[0];
 let topHourSetText = document.createElement("p");
@@ -360,6 +395,9 @@ let incrBtns = [];
 for (i = 0; i < 12; i++) {
   incrBtns[i] = document.createElement('img');
   incrBtns[i].src = 'img/incrMask.png';
+  incrBtns[i].id = i.toString();
+  incrBtns[i].addEventListener('mouseover', incrHover);
+  incrBtns[i].addEventListener('mouseout', incrUnHover);
 }
 
 let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
@@ -369,7 +407,8 @@ let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
     bottomSettingsHTextBox, bottomSettingsTenBox, bottomSettingsMinBox,
     bottomSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
-let buttons = [play, reset, soundOn];
+let buttons = [play, reset, soundOn]; // the html img elements
+let buttonLabels = ['play', 'reset', 'soundOn']
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
     topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText,
     bottomHourSetText, bottomSettingsHText, bottomTenSetText, bottomMinSetText,
@@ -379,6 +418,15 @@ let settingsText = [topHourSetText, topTenSetText, topMinSetText,
 let textBoxes = [titleTextBox, topSettingsTextBox, bottomSettingsTextBox,
     topSettingsHTextBox, topSettingsMinTextBox, bottomSettingsHTextBox,
     bottomSettingsMinTextBox];
+
+for (i = 0; i < buttons.length; i++) {
+  buttons[i].id = buttonLabels[i];
+  buttons[i].addEventListener('mouseover', btnHover);
+  buttons[i].addEventListener('mouseout', btnUnHover);
+}
+
+  //buttons[i].addEventListener('mouseout', buttonUnHover);
+
 
 // Toggle visible backgrounds for divs (for use in development)
 let editColor = false;
