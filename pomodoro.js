@@ -11,12 +11,12 @@ function setLayout() {
   }
 
   if (window.innerWidth < (timerW * 1.15)) {
-    timerW = window.innerWidth / 1.2;
+    timerW = window.innerWidth / 1.15;
     timerH = timerW * (77/96);
   }
 
   if (window.innerHeight < (timerH * 1.1)) {
-    timerH = window.innerHeight / 1.15;
+    timerH = window.innerHeight / 1.1;
     timerW = timerH * (96/77);
   }
 
