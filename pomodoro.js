@@ -1,22 +1,23 @@
 //
 
-function getDisplayData() {
-  timerW = window.innerWidth;
-  WinOutW = window.outerWidth;
-  screenW = screen.width;
-  timerH = window.innerHeight;
-  WinOutH = window.outerHeight;
-  screenH = screen.height;
-}
-
 function setLayout() {
 
-  if (screenW < 2200) {
-    if (timerW > 480) { timerW = 480; }
-    if (timerH > 385) { timerH = 385; }
-  } else if (screenW < 4400) {
-    if (timerW > 720) { timerW = 720; }
-    if (timerH > 578) { timerH = 578; }
+  if (screen.width < 2200) { // 'standard' 1080p(ish) desktop
+    timerW = 480; // x/y = 96/77
+    timerH = 385;
+  } else if (screen.width < 4400) { // 4k(ish)+ desktop
+    timerW = 720;
+    timerH = 578;
+  }
+
+  if (window.innerWidth < (timerW * 1.15)) {
+    timerW = window.innerWidth / 1.2;
+    timerH = timerW * (77/96);
+  }
+
+  if (window.innerHeight < (timerH * 1.1)) {
+    timerH = window.innerHeight / 1.15;
+    timerW = timerH * (96/77);
   }
 
 // put conditional here based on AREA (for desktops)
@@ -26,14 +27,12 @@ function setLayout() {
 
 // winRatio = timerW / timerH;
 
-  layout = "landscape";
   topDisplayH = timerH * (1.7 / 11);
   mainDisplayH = timerH * (7 / 11);
   bottomDisplayH = timerH * (2.3 / 11);
 }
 
 function drawPage() {
-  getDisplayData();
   setLayout();
   container.style.width = `${timerW}px`;
   container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
@@ -172,7 +171,7 @@ function stylePage() {
   lineTopL.style.width = `${topLineW}px`;
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
-  titleTextBox.style.width = `${timerW - (topLineW * 2)}px`;
+  titleTextBox.style.width = `${timerW - 1 - (topLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
 
   titleText.style.textAlign = 'center';
   titleText.innerHTML = "DUTY SETTINGS";
@@ -184,7 +183,7 @@ function stylePage() {
   lineBottomL.style.width = `${bottomLineW}px`;
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
 
-  bottomControlsBox.style.width = `${timerW - (bottomLineW * 2)}px`;
+  bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
   bottomControlsBox.style.height = `${textH * 1.5}px`;
 
   lineBottomR.style.width = `${bottomLineW}px`;
@@ -340,6 +339,12 @@ function incrUnHover() {
   }
 }
 
+function clickPlay() {
+  settingsDisplay.style.display = 'none';
+  timerDisplay.style.display = 'block';
+}
+
+
 // ---------- initial declarations and commands -------------
 
 let timerW = 0;
@@ -391,6 +396,10 @@ let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
 let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
+
+let clickPlayAtt = document.createAttribute("onclick");
+clickPlayAtt.value = "clickPlay()";
+play.setAttributeNode(clickPlayAtt);
 
 let incrBtns = [];
 for (i = 0; i < 12; i++) {
