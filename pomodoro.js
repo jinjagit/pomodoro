@@ -131,6 +131,8 @@ function stylePage() {
   bottomDisplay.style.lineHeight = `${bottomDisplayH}px`;
   topSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
   bottomSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
+  topTimerContainer.style.lineHeight = `${mainDisplayH * 0.75}px`;
+  bottomTimerContainer.style.lineHeight = `${mainDisplayH * 0.25}px`;
 
   styleDefaults(defaultItems); // includes lines
   styleLines(lines);
@@ -165,6 +167,8 @@ function stylePage() {
   bottomSettingsTenBox.style.backgroundColor = mainDisplayBgColor;
   bottomSettingsMinBox.style.backgroundColor = mainDisplayBgColor;
   bottomSettingsMinTextBox.style.backgroundColor = mainDisplayBgColor;
+  topTimerContainer.style.backgroundColor = mainDisplayBgColor;
+  bottomTimerContainer.style.backgroundColor = settingsDispBbgColor;
   // ------------------------------------------------------------------------
 
   //      Settings 'display', 'header' & 'footer' ...........................
@@ -306,6 +310,10 @@ function stylePage() {
   bottomSettingsMinText.style.textAlign = 'right';
   bottomSettingsMinText.innerHTML = "m";
   bottomSettingsMinText.style.color = offDutyColor;
+
+  //      Timer container contents .......................................
+  topTimerContainer.style.height = `${mainDisplayH * 0.65}px`;
+  bottomTimerContainer.style.height = `${mainDisplayH * 0.35}px`;
 
 }
 
