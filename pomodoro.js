@@ -1,7 +1,15 @@
 //
 
-function setLayout() {
+function drawPage() {
+  setLayout();
+  container.style.width = `${timerW}px`;
+  container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
 
+  input = "";
+  stylePage();
+}
+
+function setLayout() {
   if (screen.width < 2200) { // 'standard' 1080p(ish) desktop
     timerW = 480; // x/y = 96/77
     timerH = 385;
@@ -20,25 +28,9 @@ function setLayout() {
     timerW = timerH * (96/77);
   }
 
-// put conditional here based on AREA (for desktops)
-// if window area is smaller than default size (+ a bit for margin)
-// then define new timer dimensions ;-) (Take care to prioritize correct axis)
-// mobile remains: timer dimensions = window dimensions (-bit for margins)
-
-// winRatio = timerW / timerH;
-
   topDisplayH = timerH * (1.7 / 11);
   mainDisplayH = timerH * (7 / 11);
   bottomDisplayH = timerH * (2.3 / 11);
-}
-
-function drawPage() {
-  setLayout();
-  container.style.width = `${timerW}px`;
-  container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
-
-  input = "";
-  stylePage();
 }
 
 function stylePage() {
@@ -204,24 +196,24 @@ function stylePage() {
 
   titleTextBox.style.width = `${timerW - 1 - (topLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
 
-  //      Settings 'display', 'header' & 'footer' ...........................
+  bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
+  bottomControlsBox.style.height = `${textH * 1.5}px`;
+
+  document.getElementById('bottomControlsBox').appendChild(soundOn);
+  soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
+
+  document.getElementById('bottomControlsBox').appendChild(reset);
+  reset.style.margin = `0 ${timerW / 30}px 0 0`;
+
+  document.getElementById('bottomControlsBox').appendChild(play);
+  play.style.margin = `0 ${timerW / 23}px 0 0`;
+
+  //     'Display', 'header' & 'footer' styling ...........................
 
   if (mode == "settings") {
-
     titleText.innerHTML = "DUTY SETTINGS";
-
-    bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
-    bottomControlsBox.style.height = `${textH * 1.5}px`;
-
-    document.getElementById('bottomControlsBox').appendChild(soundOn);
-    soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
-
-    document.getElementById('bottomControlsBox').appendChild(reset);
-    reset.style.margin = `0 ${timerW / 30}px 0 0`;
-
-    document.getElementById('bottomControlsBox').appendChild(play);
-    play.style.margin = `0 ${timerW / 23}px 0 0`;
-
+  } else if (mode == "on_duty") { // Refactor when add on/off duty stylings
+    titleText.innerHTML = "ON DUTY";
   }
 
   //      Settings container contents .......................................
@@ -334,15 +326,8 @@ function stylePage() {
   bottomSettingsMinText.innerHTML = "m";
   bottomSettingsMinText.style.color = offDutyColor;
 
-  if (mode == "on_duty") { // Refactor when add on/off duty stylings
-
-  //      Timer 'display', 'header' & 'footer' ...........................
-
-    titleText.innerHTML = "ON DUTY";
-
-  }
-
   //      Timer container contents .......................................
+
   topTimerContainer.style.height = `${mainDisplayH * 0.65}px`;
   bottomTimerContainer.style.height = `${mainDisplayH * 0.35}px`;
 
@@ -379,9 +364,7 @@ function incrUnHover() {
 }
 
 function clickPlay() {
-  // need to add conditional for whn 'play' is used to resume from 'paused'
-  settingsDisplay.style.display = 'none';
-  timerDisplay.style.display = 'block';
+  // need to add conditional for when 'play' is used to resume from 'paused'
   mode = "on_duty";
   drawPage();
 }
@@ -480,9 +463,6 @@ for (i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('mouseover', btnHover);
   buttons[i].addEventListener('mouseout', btnUnHover);
 }
-
-  //buttons[i].addEventListener('mouseout', buttonUnHover);
-
 
 // Toggle visible backgrounds for divs (for use in development)
 let editColor = false;
