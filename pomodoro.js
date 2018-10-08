@@ -46,7 +46,7 @@ function stylePage() {
     for (let i = 0; i < defaultItems.length; i++) {
       defaultItems[i].style.display = 'inline-block';
       defaultItems[i].style.verticalAlign = 'middle';
-      defaultItems[i].style.backgroundColor = settingsColor;
+      defaultItems[i].style.backgroundColor = modeColor;
     }
   }
 
@@ -59,9 +59,15 @@ function stylePage() {
   function styleButons(buttons) {
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].style.height = '100%';
-      buttons[i].style.backgroundColor = settingsColor;
       buttons[i].style.display = 'inline-block';
       buttons[i].style.verticalAlign = 'top';
+      if (mode == "settings") {
+        buttons[i].style.backgroundColor = settingsColor;
+      } else if (mode == "on_duty") {
+        buttons[i].style.backgroundColor = onDutyColor;
+      } else {
+        buttons[i].style.backgroundColor = offDutyColor;
+      }
     }
   }
 
@@ -104,22 +110,32 @@ function stylePage() {
   function styleTextBoxes(textBoxes) {
     for (let i = 0; i < textBoxes.length; i++) {
       textBoxes[i].style.height = `${textH}px`;
-
     }
   }
 
   lineH = topDisplayH * 0.045;
-  topLineW = timerW * 0.255;
   bottomLineW = timerW * 0.3;
   lineTopVert = (topDisplayH - lineH) / 2;
   textH = topDisplayH / 2.2; // ?change to 'textH'?
 
-  if (settingsMode = true) {
+  if (mode == "settings") {
     timerDisplay.style.display = 'none';
     settingsDisplay.style.display = 'block';
+    modeHoverColor = settingsHoverColor;
+    modeColor = settingsColor;
+    topLineW = timerW * 0.255;
   } else {
     settingsDisplay.style.display = 'none';
     timerDisplay.style.display = 'block';
+    if (mode == "on_duty") {
+      modeHoverColor = onDutyHoverColor;
+      modeColor = onDutyColor;
+      topLineW = timerW * 0.34;
+    } else {
+      modeHoverColor = offDutyHoverColor;
+      modeColor = offDutyColor;
+      topLineW = timerW * 0.3 // guess... check
+    }
   }
 
   topDisplay.style.height= `${topDisplayH}px`;
@@ -134,6 +150,8 @@ function stylePage() {
   topTimerContainer.style.lineHeight = `${mainDisplayH * 0.75}px`;
   bottomTimerContainer.style.lineHeight = `${mainDisplayH * 0.25}px`;
 
+  bottomDisplay.style.textAlign = "right";
+
   styleDefaults(defaultItems); // includes lines
   styleLines(lines);
   styleButons(buttons);
@@ -141,8 +159,6 @@ function stylePage() {
   styleIncrBtns(incrBtns);
   styleSettingsText(settingsText);
   styleTextBoxes(textBoxes);
-
-  bottomDisplay.style.textAlign = "right";
 
   // This block can all be set to 'black' when layout finalized -------------
   container.style.backgroundColor = containerBgColor;
@@ -171,38 +187,45 @@ function stylePage() {
   bottomTimerContainer.style.backgroundColor = settingsDispBbgColor;
   // ------------------------------------------------------------------------
 
-  //      Settings 'display', 'header' & 'footer' ...........................
-  lineTopL.style.width = `${topLineW}px`;
+  //      Styling common to all 'display' modes
+
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
+  lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
+  lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
+  lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
+
+  lineTopL.style.width = `${topLineW}px`;
+  lineTopR.style.width = `${topLineW}px`;
+  lineBottomL.style.width = `${bottomLineW}px`;
+  lineBottomR.style.width = `${bottomLineW}px`;
+
+  titleText.style.textAlign = 'center';
+  titleText.style.color = modeColor;
 
   titleTextBox.style.width = `${timerW - 1 - (topLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
 
-  titleText.style.textAlign = 'center';
-  titleText.innerHTML = "DUTY SETTINGS";
-  titleText.style.color = settingsColor;
+  //      Settings 'display', 'header' & 'footer' ...........................
 
-  lineTopR.style.width = `${topLineW}px`;
-  lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
+  if (mode == "settings") {
 
-  lineBottomL.style.width = `${bottomLineW}px`;
-  lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
+    titleText.innerHTML = "DUTY SETTINGS";
 
-  bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
-  bottomControlsBox.style.height = `${textH * 1.5}px`;
+    bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
+    bottomControlsBox.style.height = `${textH * 1.5}px`;
 
-  lineBottomR.style.width = `${bottomLineW}px`;
-  lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
+    document.getElementById('bottomControlsBox').appendChild(soundOn);
+    soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
 
-  document.getElementById('bottomControlsBox').appendChild(soundOn);
-  soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
+    document.getElementById('bottomControlsBox').appendChild(reset);
+    reset.style.margin = `0 ${timerW / 30}px 0 0`;
 
-  document.getElementById('bottomControlsBox').appendChild(reset);
-  reset.style.margin = `0 ${timerW / 30}px 0 0`;
+    document.getElementById('bottomControlsBox').appendChild(play);
+    play.style.margin = `0 ${timerW / 23}px 0 0`;
 
-  document.getElementById('bottomControlsBox').appendChild(play);
-  play.style.margin = `0 ${timerW / 23}px 0 0`;
+  }
 
   //      Settings container contents .......................................
+
   topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
   bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
 
@@ -311,6 +334,14 @@ function stylePage() {
   bottomSettingsMinText.innerHTML = "m";
   bottomSettingsMinText.style.color = offDutyColor;
 
+  if (mode == "on_duty") { // Refactor when add on/off duty stylings
+
+  //      Timer 'display', 'header' & 'footer' ...........................
+
+    titleText.innerHTML = "ON DUTY";
+
+  }
+
   //      Timer container contents .......................................
   topTimerContainer.style.height = `${mainDisplayH * 0.65}px`;
   bottomTimerContainer.style.height = `${mainDisplayH * 0.35}px`;
@@ -348,8 +379,11 @@ function incrUnHover() {
 }
 
 function clickPlay() {
+  // need to add conditional for whn 'play' is used to resume from 'paused'
   settingsDisplay.style.display = 'none';
   timerDisplay.style.display = 'block';
+  mode = "on_duty";
+  drawPage();
 }
 
 
@@ -363,7 +397,7 @@ let WinOutH = 0;
 let screenH = 0;
 let winRatio = 0;
 
-let settingsMode = true;
+let mode = "settings"; // "settings" / "on_duty" / "off_duty"
 
 let bottomDisplayH = 0;
 let topDisplayH = 0;
