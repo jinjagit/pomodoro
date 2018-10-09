@@ -166,6 +166,7 @@ function drawPage() {
   bottomSettingsMinTextBox.style.backgroundColor = mainDisplayBgColor;
   topTimerContainer.style.backgroundColor = mainDisplayBgColor;
   bottomTimerContainer.style.backgroundColor = settingsDispBbgColor;
+  timerDigitsTextBox.style.backgroundColor = settingsDispBbgColor;
   // ------------------------------------------------------------------------
 
   //      Styling common to all 'display' modes .............................
@@ -331,8 +332,19 @@ function drawPage() {
 
   //      Timer container contents .......................................
 
-  topTimerContainer.style.height = `${mainDisplayH * 0.65}px`;
-  bottomTimerContainer.style.height = `${mainDisplayH * 0.35}px`;
+  if (mode == "timer") {
+    topTimerContainer.style.height = `${mainDisplayH * 0.75}px`;
+    bottomTimerContainer.style.height = `${mainDisplayH * 0.25}px`;
+    timerDigitsTextBox.style.height = `70%`;
+    timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
+    timerDigitsTextBox.style.display = 'inline-block';
+    timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
+    timerDigitsText.innerHTML = "0:00:25";
+    timerDigitsText.style.color = modeColor;
+    timerDigitsText.style.fontSize = `${textH * 4}px`;
+    timerDigitsText.style.textAlign = 'center';
+    timerDigitsText.style.lineHeight = `${mainDisplayH * 0.525}px`;
+  }
 
 }
 
@@ -424,6 +436,7 @@ let topMinSetText = document.createElement("p");
 let bottomHourSetText = document.createElement("p");
 let bottomTenSetText = document.createElement("p");
 let bottomMinSetText = document.createElement("p");
+
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
 let pause = document.createElement('img');
@@ -482,9 +495,9 @@ for (i = 0; i < buttons.length; i++) {
 }
 
 // Toggle visible backgrounds for divs (for use in development)
-let editColor = false;
+let editColor = true;
 
-if (editColor == true) {
+if (editColor == false) {
   containerBgColor = "#101519";
   bodyBgColor = "#110f0b";
   mainDisplayBgColor = "#0f0d09";
