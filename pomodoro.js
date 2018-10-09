@@ -1,14 +1,5 @@
 //
 
-function drawPage() {
-  setLayout();
-  container.style.width = `${timerW}px`;
-  container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
-
-  input = "";
-  stylePage();
-}
-
 function setLayout() {
   if (screen.width < 2200) { // 'standard' 1080p(ish) desktop
     timerW = 480; // x/y = 96/77
@@ -33,7 +24,7 @@ function setLayout() {
   bottomDisplayH = timerH * (2.3 / 11);
 }
 
-function stylePage() {
+function drawPage() {
   function styleDefaults(defaultItems) {
     for (let i = 0; i < defaultItems.length; i++) {
       defaultItems[i].style.display = 'inline-block';
@@ -105,6 +96,7 @@ function stylePage() {
     }
   }
 
+  setLayout();
   lineH = topDisplayH * 0.045;
   bottomLineW = timerW * 0.3;
   lineTopVert = (topDisplayH - lineH) / 2;
@@ -129,6 +121,9 @@ function stylePage() {
       topLineW = timerW * 0.3 // guess... check
     }
   }
+
+  container.style.width = `${timerW}px`;
+  container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
 
   topDisplay.style.height= `${topDisplayH}px`;
   timerDisplay.style.height = `${mainDisplayH}px`;
@@ -205,15 +200,29 @@ function stylePage() {
   document.getElementById('bottomControlsBox').appendChild(reset);
   reset.style.margin = `0 ${timerW / 30}px 0 0`;
 
+  document.getElementById('bottomControlsBox').appendChild(stop);
+  stop.style.margin = `0 ${timerW / 30}px 0 0`;
+
   document.getElementById('bottomControlsBox').appendChild(play);
   play.style.margin = `0 ${timerW / 23}px 0 0`;
+
+  document.getElementById('bottomControlsBox').appendChild(pause);
+  pause.style.margin = `0 ${timerW / 23}px 0 0`;
 
   //     'Display', 'header' & 'footer' styling ...........................
 
   if (mode == "settings") {
     titleText.innerHTML = "DUTY SETTINGS";
+    stop.style.display = 'none';
+    pause.style.display = 'none';
+    play.style.display = 'inline-block';
+    reset.style.display = 'inline-block';
   } else if (mode == "on_duty") { // Refactor when add on/off duty stylings
     titleText.innerHTML = "ON DUTY";
+    stop.style.display = 'inline-block';
+    pause.style.display = 'inline-block';
+    play.style.display = 'none';
+    reset.style.display = 'none';
   }
 
   //      Settings container contents .......................................
@@ -417,8 +426,12 @@ let bottomTenSetText = document.createElement("p");
 let bottomMinSetText = document.createElement("p");
 let play = document.createElement('img');
 play.src = 'img/playMask.png';
+let pause = document.createElement('img');
+pause.src = 'img/pauseMask.png';
 let reset = document.createElement('img');
 reset.src = 'img/resetMask.png';
+let stop = document.createElement('img');
+stop.src = 'img/stopMask.png';
 let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
 
@@ -446,8 +459,8 @@ let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
     bottomSettingsHTextBox, bottomSettingsTenBox, bottomSettingsMinBox,
     bottomSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
-let buttons = [play, reset, soundOn]; // the html img elements
-let buttonLabels = ['play', 'reset', 'soundOn']
+let buttons = [play, pause, reset, stop, soundOn]; // the html img elements
+let buttonLabels = ['play', 'pause', 'reset', 'stop', 'soundOn']
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
     topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText,
     bottomHourSetText, bottomSettingsHText, bottomTenSetText, bottomMinSetText,
