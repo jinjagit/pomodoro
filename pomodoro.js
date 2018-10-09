@@ -44,13 +44,7 @@ function drawPage() {
       buttons[i].style.height = '100%';
       buttons[i].style.display = 'inline-block';
       buttons[i].style.verticalAlign = 'top';
-      if (mode == "settings") {
-        buttons[i].style.backgroundColor = settingsColor;
-      } else if (mode == "on_duty") {
-        buttons[i].style.backgroundColor = onDutyColor;
-      } else {
-        buttons[i].style.backgroundColor = offDutyColor;
-      }
+      buttons[i].style.backgroundColor = modeColor;
     }
   }
 
@@ -108,10 +102,10 @@ function drawPage() {
     modeHoverColor = settingsHoverColor;
     modeColor = settingsColor;
     topLineW = timerW * 0.255;
-  } else {
+  } else { // mode == "timer"
     settingsDisplay.style.display = 'none';
     timerDisplay.style.display = 'block';
-    if (mode == "on_duty") {
+    if (timerMode == "on_duty") {
       modeHoverColor = onDutyHoverColor;
       modeColor = onDutyColor;
       topLineW = timerW * 0.34;
@@ -174,7 +168,7 @@ function drawPage() {
   bottomTimerContainer.style.backgroundColor = settingsDispBbgColor;
   // ------------------------------------------------------------------------
 
-  //      Styling common to all 'display' modes
+  //      Styling common to all 'display' modes .............................
 
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
   lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
@@ -217,7 +211,7 @@ function drawPage() {
     pause.style.display = 'none';
     play.style.display = 'inline-block';
     reset.style.display = 'inline-block';
-  } else if (mode == "on_duty") { // Refactor when add on/off duty stylings
+  } else if (mode == "timer") { // Refactor when add on/off duty stylings
     titleText.innerHTML = "ON DUTY";
     stop.style.display = 'inline-block';
     pause.style.display = 'inline-block';
@@ -374,7 +368,12 @@ function incrUnHover() {
 
 function clickPlay() {
   // need to add conditional for when 'play' is used to resume from 'paused'
-  mode = "on_duty";
+  mode = "timer";
+  drawPage();
+}
+
+function clickStop() {
+  mode = "settings";
   drawPage();
 }
 
@@ -389,7 +388,8 @@ let WinOutH = 0;
 let screenH = 0;
 let winRatio = 0;
 
-let mode = "settings"; // "settings" / "on_duty" / "off_duty"
+let mode = "settings"; // "settings" or "timer"
+let timerMode = "on_duty"; // "on_duty" or "off_duty"
 
 let bottomDisplayH = 0;
 let topDisplayH = 0;
@@ -438,6 +438,10 @@ soundOn.src = 'img/soundOnMask.png';
 let clickPlayAtt = document.createAttribute("onclick");
 clickPlayAtt.value = "clickPlay()";
 play.setAttributeNode(clickPlayAtt);
+
+let clickStopAtt = document.createAttribute("onclick");
+clickStopAtt.value = "clickStop()";
+stop.setAttributeNode(clickStopAtt);
 
 let incrBtns = [];
 for (i = 0; i < 12; i++) {
