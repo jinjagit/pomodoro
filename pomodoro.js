@@ -338,12 +338,18 @@ function drawPage() {
     timerDigitsTextBox.style.height = `70%`;
     timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
     timerDigitsTextBox.style.display = 'inline-block';
-    timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
+    timerDigitsTextBox.style.margin = '4.5% 10% 6.5% 10%';
     timerDigitsText.innerHTML = "0:00:25";
     timerDigitsText.style.color = modeColor;
     timerDigitsText.style.fontSize = `${textH * 4}px`;
     timerDigitsText.style.textAlign = 'center';
     timerDigitsText.style.lineHeight = `${mainDisplayH * 0.525}px`;
+    progressBar.style.height = `20%`;
+    progressBar.style.width = `${timerW * 0.76}px`;
+    progressBar.style.display = 'inline-block';
+    progressBar.style.margin = '4% 12% 7% 12%';
+    progressBar.style.backgroundColor = modeColor;
+    progressBar.style.borderRadius = `${textH}px`;
   }
 
 }
@@ -495,9 +501,9 @@ for (i = 0; i < buttons.length; i++) {
 }
 
 // Toggle visible backgrounds for divs (for use in development)
-let editColor = true;
+let editColor = false;
 
-if (editColor == false) {
+if (editColor == true) {
   containerBgColor = "#101519";
   bodyBgColor = "#110f0b";
   mainDisplayBgColor = "#0f0d09";
