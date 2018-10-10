@@ -260,7 +260,7 @@ function drawPage() {
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
 
     document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
-    topHourSetText.innerHTML = "0";
+    topHourSetText.innerHTML = hourOnD.toString();
     topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
@@ -275,7 +275,7 @@ function drawPage() {
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
 
     document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
-    topTenSetText.innerHTML = "2";
+    topTenSetText.innerHTML = tenMinOnD.toString();
     topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
@@ -283,7 +283,7 @@ function drawPage() {
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
 
     document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
-    topMinSetText.innerHTML = "5";
+    topMinSetText.innerHTML = minOnD.toString();
     topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
@@ -306,7 +306,7 @@ function drawPage() {
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
 
     document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
-    bottomHourSetText.innerHTML = "0";
+    bottomHourSetText.innerHTML = hourOffD.toString();
     bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
@@ -321,7 +321,7 @@ function drawPage() {
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
 
     document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
-    bottomTenSetText.innerHTML = "0";
+    bottomTenSetText.innerHTML = tenMinOffD.toString();
     bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
@@ -329,7 +329,7 @@ function drawPage() {
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
 
     document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
-    bottomMinSetText.innerHTML = "5";
+    bottomMinSetText.innerHTML = minOffD.toString();
     bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
@@ -423,23 +423,49 @@ function clickUnmute() {
 }
 
 function clickIncr(thisID) {
-
-  console.log(thisID);
+  if (thisID == 0) {
+    hourOnD = (hourOnD + 1) % 10;
+    topHourSetText.innerHTML = hourOnD.toString();
+  } else if (thisID == 1) {
+    hourOnD = (hourOnD + 9) % 10;
+    topHourSetText.innerHTML = hourOnD.toString();
+  } else if (thisID == 2) {
+    tenMinOnD = (tenMinOnD + 1) % 6;
+    topTenSetText.innerHTML = tenMinOnD.toString();
+  } else if (thisID == 3) {
+    tenMinOnD = (tenMinOnD + 5) % 6;
+    topTenSetText.innerHTML = tenMinOnD.toString();
+  } else if (thisID == 4) {
+    minOnD = (minOnD + 1) % 10;
+    topMinSetText.innerHTML = minOnD.toString();
+  } else if (thisID == 5) {
+    minOnD = (minOnD + 9) % 10;
+    topMinSetText.innerHTML = minOnD.toString();
+  } else if (thisID == 6) {
+    hourOffD = (hourOffD + 1) % 10;
+    bottomHourSetText.innerHTML = hourOffD.toString();
+  } else if (thisID == 7) {
+    hourOffD = (hourOffD + 9) % 10;
+    bottomHourSetText.innerHTML = hourOffD.toString();
+  } else if (thisID == 8) {
+    tenMinOffD = (tenMinOffD + 1) % 6;
+    bottomTenSetText.innerHTML = tenMinOffD.toString();
+  } else if (thisID == 9) {
+    tenMinOffD = (tenMinOffD + 5) % 6;
+    bottomTenSetText.innerHTML = tenMinOffD.toString();
+  } else if (thisID == 10) {
+    minOffD = (minOffD + 1) % 10;
+    bottomMinSetText.innerHTML = minOffD.toString();
+  } else if (thisID == 11) {
+    minOffD = (minOffD + 9) % 10;
+    bottomMinSetText.innerHTML = minOffD.toString();
+  }
 }
 
 // ---------- initial declarations and commands -------------
 
 let timerW = 0;
-let WinOutW = 0;
-let screenW = 0;
 let timerH = 0;
-let WinOutH = 0;
-let screenH = 0;
-let winRatio = 0;
-
-let mode = "settings"; // "settings" or "timer"
-let timerMode = "on_duty"; // "on_duty" or "off_duty"
-let mute = false;
 
 let bottomDisplayH = 0;
 let topDisplayH = 0;
@@ -450,6 +476,17 @@ let topLineW = 0;
 let bottomLineW = 0;
 let lineTopVert = 0;
 let textH = 0;
+
+let mode = "settings"; // "settings" or "timer"
+let timerMode = "on_duty"; // "on_duty" or "off_duty"
+let mute = false;
+
+let hourOnD = 0;
+let tenMinOnD = 2;
+let minOnD = 5;
+let hourOffD = 0;
+let tenMinOffD = 0;
+let minOffD = 5;
 
 let dispBbgColor = "black";
 let dispAbgColor = "black";
@@ -522,8 +559,6 @@ for (i = 0; i < 12; i++) {
   clickIncrAtts[i].value = `clickIncr(${i})`;
   incrBtns[i].setAttributeNode(clickIncrAtts[i]);
 }
-
-console.log(clickIncrAtts);
 
 let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
     bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox,
