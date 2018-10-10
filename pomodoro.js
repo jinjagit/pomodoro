@@ -338,16 +338,23 @@ function drawPage() {
     timerDigitsTextBox.style.height = `70%`;
     timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
     timerDigitsTextBox.style.display = 'inline-block';
-    timerDigitsTextBox.style.margin = '4.5% 10% 6.5% 10%';
+    timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
     timerDigitsText.innerHTML = "0:00:25";
     timerDigitsText.style.color = modeColor;
     timerDigitsText.style.fontSize = `${textH * 4}px`;
     timerDigitsText.style.textAlign = 'center';
     timerDigitsText.style.lineHeight = `${mainDisplayH * 0.525}px`;
-    progressBar.style.height = `20%`;
-    progressBar.style.width = `${timerW * 0.76}px`;
-    progressBar.style.display = 'inline-block';
-    progressBar.style.margin = '4% 12% 7% 12%';
+
+    progressBarBack.style.height = `20%`;
+    progressBarBack.style.width = `${timerW * 0.76}px`;
+    progressBarBack.style.display = 'inline-block';
+    progressBarBack.style.margin = '4% 12% 7% 12%';
+    progressBarBack.style.backgroundColor = onDutyProgColor;
+    progressBarBack.style.borderRadius = `${textH}px`;
+
+    progressBar.style.zIndex = "-1";
+    progressBar.style.height = `100%`;
+    progressBar.style.width = `${timerW * 0.5}px`;
     progressBar.style.backgroundColor = modeColor;
     progressBar.style.borderRadius = `${textH}px`;
   }
@@ -429,6 +436,7 @@ let settingsColor = "hsl(28, 100%, 55%)";
 let settingsHoverColor = "hsl(28, 100%, 35%)";
 let onDutyColor = "hsl(215, 100%, 60%)";
 let onDutyHoverColor = "hsl(215, 100%, 40%)";
+let onDutyProgColor = "hsl(215, 50%, 15%)";
 let offDutyColor = "hsl(104, 60%, 45%)";
 let offDutyHoverColor = "hsl(104, 60%, 25%)";
 
@@ -517,8 +525,8 @@ container.style.margin = "auto";
 // ?separate setting styles (that don't change dynamically) from layouts,
 // which do change dynamically? Pull out of drawPage() into new
 // method 'stylePage()' [Cannot include any sizes relative to dimensions]
-// Note: ALMOST everything is dynamic, in that almost every element can change
-// any of its properties in some circumstance (change; mode, size, etc.).
+// Note: almost EVERYTHING is dynamic, in that almost every element can change
+// any of its properties in some circumstance (change of; mode, size, etc.).
 // Perhaps only appendchild statements can be run just once at start?
 
 drawPage(); // Also called whenever window (body) is resized
