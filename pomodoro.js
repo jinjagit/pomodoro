@@ -192,6 +192,9 @@ function drawPage() {
   document.getElementById('bottomControlsBox').appendChild(soundOn);
   soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
 
+  document.getElementById('bottomControlsBox').appendChild(soundOff);
+  soundOff.style.margin = `0 ${timerW / 36}px 0 0`;
+
   document.getElementById('bottomControlsBox').appendChild(reset);
   reset.style.margin = `0 ${timerW / 30}px 0 0`;
 
@@ -214,125 +217,130 @@ function drawPage() {
     reset.style.display = 'inline-block';
   } else if (mode == "timer") { // Refactor when add on/off duty stylings
     titleText.innerHTML = "ON DUTY";
-    stop.style.display = 'inline-block';
-    pause.style.display = 'inline-block';
+    stop.style.display = 'inline-block'; // needs condition on pause state
+    pause.style.display = 'inline-block'; // needs condition on pause state
     play.style.display = 'none';
     reset.style.display = 'none';
   }
 
-  //      Settings container contents .......................................
+  if (mute == false) {
+    soundOff.style.display = 'none';
+    soundOn.style.display = 'inline-block';
+  } else {
+    soundOn.style.display = 'none';
+    soundOff.style.display = 'inline-block';
+  }
 
-  topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
-  bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+  if (mode == "settings") { // ... Settings container contents ..............
+    topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
+    bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
 
-  topSettingsTextBox.style.width = `${timerW / 2.25}px`;
-  bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
+    topSettingsTextBox.style.width = `${timerW / 2.25}px`;
+    bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
 
-  topSettingsText.style.textAlign = 'right';
-  topSettingsText.innerHTML = "ON DUTY:";
-  topSettingsText.style.color = onDutyColor;
-  topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
+    topSettingsText.style.textAlign = 'right';
+    topSettingsText.innerHTML = "ON DUTY:";
+    topSettingsText.style.color = onDutyColor;
+    topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
-  bottomSettingsText.style.textAlign = 'right';
-  bottomSettingsText.innerHTML = "OFF DUTY:";
-  bottomSettingsText.style.color = offDutyColor;
-  bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
+    bottomSettingsText.style.textAlign = 'right';
+    bottomSettingsText.innerHTML = "OFF DUTY:";
+    bottomSettingsText.style.color = offDutyColor;
+    bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
 
-  topSettingsHourBox.style.width = `${timerW / 13}px`;
-  topSettingsHourBox.style.height = `${textH * 3}px`;
+    topSettingsHourBox.style.width = `${timerW / 13}px`;
+    topSettingsHourBox.style.height = `${textH * 3}px`;
 
-  topSettingsTenBox.style.width = `${timerW / 13}px`;
-  topSettingsTenBox.style.height = `${textH * 3}px`;
+    topSettingsTenBox.style.width = `${timerW / 13}px`;
+    topSettingsTenBox.style.height = `${textH * 3}px`;
 
-  topSettingsMinBox.style.width = `${timerW / 13}px`;
-  topSettingsMinBox.style.height = `${textH * 3}px`;
+    topSettingsMinBox.style.width = `${timerW / 13}px`;
+    topSettingsMinBox.style.height = `${textH * 3}px`;
 
-  document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
+    document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
 
-  document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
-  topHourSetText.innerHTML = "0";
-  topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
+    topHourSetText.innerHTML = "0";
+    topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
+    document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
 
-  topSettingsHTextBox.style.width = `${timerW / 10}px`;
+    topSettingsHTextBox.style.width = `${timerW / 10}px`;
 
-  topSettingsHText.style.textAlign = 'left';
-  topSettingsHText.innerHTML = "h";
-  topSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
-  topSettingsHText.style.color = onDutyColor;
+    topSettingsHText.style.textAlign = 'left';
+    topSettingsHText.innerHTML = "h";
+    topSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
+    topSettingsHText.style.color = onDutyColor;
 
-  document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
+    document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
 
-  document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
-  topTenSetText.innerHTML = "2";
-  topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
+    topTenSetText.innerHTML = "2";
+    topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
+    document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
 
-  document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
+    document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
 
-  document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
-  topMinSetText.innerHTML = "5";
-  topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
+    topMinSetText.innerHTML = "5";
+    topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
+    document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
 
-  topSettingsMinTextBox.style.width = `${timerW / 24}px`;
+    topSettingsMinTextBox.style.width = `${timerW / 24}px`;
 
-  topSettingsMinText.style.textAlign = 'right';
-  topSettingsMinText.innerHTML = "m";
-  topSettingsMinText.style.color = onDutyColor;
+    topSettingsMinText.style.textAlign = 'right';
+    topSettingsMinText.innerHTML = "m";
+    topSettingsMinText.style.color = onDutyColor;
 
-  bottomSettingsHourBox.style.width = `${timerW / 13}px`;
-  bottomSettingsHourBox.style.height = `${textH * 3}px`;
+    bottomSettingsHourBox.style.width = `${timerW / 13}px`;
+    bottomSettingsHourBox.style.height = `${textH * 3}px`;
 
-  bottomSettingsTenBox.style.width = `${timerW / 13}px`;
-  bottomSettingsTenBox.style.height = `${textH * 3}px`;
+    bottomSettingsTenBox.style.width = `${timerW / 13}px`;
+    bottomSettingsTenBox.style.height = `${textH * 3}px`;
 
-  bottomSettingsMinBox.style.width = `${timerW / 13}px`;
-  bottomSettingsMinBox.style.height = `${textH * 3}px`;
+    bottomSettingsMinBox.style.width = `${timerW / 13}px`;
+    bottomSettingsMinBox.style.height = `${textH * 3}px`;
 
-  document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
+    document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
 
-  document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
-  bottomHourSetText.innerHTML = "0";
-  bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
+    bottomHourSetText.innerHTML = "0";
+    bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
+    document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
 
-  bottomSettingsHTextBox.style.width = `${timerW / 10}px`;
+    bottomSettingsHTextBox.style.width = `${timerW / 10}px`;
 
-  bottomSettingsHText.style.textAlign = 'left';
-  bottomSettingsHText.innerHTML = "h";
-  bottomSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
-  bottomSettingsHText.style.color = offDutyColor;
+    bottomSettingsHText.style.textAlign = 'left';
+    bottomSettingsHText.innerHTML = "h";
+    bottomSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
+    bottomSettingsHText.style.color = offDutyColor;
 
-  document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
+    document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
 
-  document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
-  bottomTenSetText.innerHTML = "0";
-  bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
+    bottomTenSetText.innerHTML = "0";
+    bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
+    document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
 
-  document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
+    document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
 
-  document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
-  bottomMinSetText.innerHTML = "5";
-  bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
+    document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
+    bottomMinSetText.innerHTML = "5";
+    bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
-  document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
+    document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
 
-  bottomSettingsMinTextBox.style.width = `${timerW / 24}px`;
+    bottomSettingsMinTextBox.style.width = `${timerW / 24}px`;
 
-  bottomSettingsMinText.style.textAlign = 'right';
-  bottomSettingsMinText.innerHTML = "m";
-  bottomSettingsMinText.style.color = offDutyColor;
+    bottomSettingsMinText.style.textAlign = 'right';
+    bottomSettingsMinText.innerHTML = "m";
+    bottomSettingsMinText.style.color = offDutyColor;
 
-  //      Timer container contents .......................................
-
-  if (mode == "timer") {
+  } else { // mode == "timer" ... Timer container contents ...............
     topTimerContainer.style.height = `${mainDisplayH * 0.75}px`;
     bottomTimerContainer.style.height = `${mainDisplayH * 0.25}px`;
     timerDigitsTextBox.style.height = `70%`;
@@ -354,7 +362,7 @@ function drawPage() {
 
     progressBar.style.zIndex = "-1";
     progressBar.style.height = `100%`;
-    progressBar.style.width = `${timerW * 0.5}px`;
+    progressBar.style.width = `${timerW * 0.5}px`; // 0.025 min, 0.76 max factor
     progressBar.style.backgroundColor = modeColor;
     progressBar.style.borderRadius = `${textH}px`;
   }
@@ -402,6 +410,22 @@ function clickStop() {
   drawPage();
 }
 
+function clickMute() {
+  mute = true;
+  soundOn.style.display = 'none';
+  soundOff.style.display = 'inline-block';
+}
+
+function clickUnmute() {
+  mute = false;
+  soundOff.style.display = 'none';
+  soundOn.style.display = 'inline-block';
+}
+
+function clickIncr(thisID) {
+
+  console.log(thisID);
+}
 
 // ---------- initial declarations and commands -------------
 
@@ -415,6 +439,7 @@ let winRatio = 0;
 
 let mode = "settings"; // "settings" or "timer"
 let timerMode = "on_duty"; // "on_duty" or "off_duty"
+let mute = false;
 
 let bottomDisplayH = 0;
 let topDisplayH = 0;
@@ -461,6 +486,8 @@ let stop = document.createElement('img');
 stop.src = 'img/stopMask.png';
 let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
+let soundOff = document.createElement('img');
+soundOff.src = 'img/soundOffMask.png';
 
 let clickPlayAtt = document.createAttribute("onclick");
 clickPlayAtt.value = "clickPlay()";
@@ -470,7 +497,17 @@ let clickStopAtt = document.createAttribute("onclick");
 clickStopAtt.value = "clickStop()";
 stop.setAttributeNode(clickStopAtt);
 
+let clickMuteAtt = document.createAttribute("onclick");
+clickMuteAtt.value = "clickMute()";
+soundOn.setAttributeNode(clickMuteAtt);
+
+let clickUnmuteAtt = document.createAttribute("onclick");
+clickUnmuteAtt.value = "clickUnmute()";
+soundOff.setAttributeNode(clickUnmuteAtt);
+
 let incrBtns = [];
+let clickIncrAtts = [];
+
 for (i = 0; i < 12; i++) {
   incrBtns[i] = document.createElement('img');
   if (i % 2 == 0) {
@@ -481,7 +518,12 @@ for (i = 0; i < 12; i++) {
   incrBtns[i].id = i.toString();
   incrBtns[i].addEventListener('mouseover', incrHover);
   incrBtns[i].addEventListener('mouseout', incrUnHover);
+  clickIncrAtts[i] = document.createAttribute("onclick");
+  clickIncrAtts[i].value = `clickIncr(${i})`;
+  incrBtns[i].setAttributeNode(clickIncrAtts[i]);
 }
+
+console.log(clickIncrAtts);
 
 let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
     bottomControlsBox, topSettingsTextBox, bottomSettingsTextBox,
@@ -490,8 +532,8 @@ let defaultItems = [lineTopL, lineTopR, titleTextBox, lineBottomL, lineBottomR,
     bottomSettingsHTextBox, bottomSettingsTenBox, bottomSettingsMinBox,
     bottomSettingsMinTextBox];
 let lines = [lineTopL, lineTopR, lineBottomL, lineBottomR];
-let buttons = [play, pause, reset, stop, soundOn]; // the html img elements
-let buttonLabels = ['play', 'pause', 'reset', 'stop', 'soundOn']
+let buttons = [play, pause, reset, stop, soundOn, soundOff];
+let buttonLabels = ['play', 'pause', 'reset', 'stop', 'soundOn', 'soundOff'];
 let text = [titleText, topSettingsText, bottomSettingsText, topHourSetText,
     topSettingsHText, topTenSetText, topMinSetText, topSettingsMinText,
     bottomHourSetText, bottomSettingsHText, bottomTenSetText, bottomMinSetText,
@@ -517,6 +559,8 @@ if (editColor == true) {
   mainDisplayBgColor = "#0f0d09";
   settingsDispBbgColor = '#1c1810';
 }
+
+
 
 body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
