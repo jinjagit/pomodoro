@@ -191,21 +191,27 @@ function drawPage() {
 
   document.getElementById('bottomControlsBox').appendChild(soundOn);
   soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
+  soundOn.title = 'mute alarm';
 
   document.getElementById('bottomControlsBox').appendChild(soundOff);
   soundOff.style.margin = `0 ${timerW / 36}px 0 0`;
+  soundOff.title = 'unmute alarm';
 
   document.getElementById('bottomControlsBox').appendChild(reset);
   reset.style.margin = `0 ${timerW / 30}px 0 0`;
+  reset.title = 'reset defaults';
 
   document.getElementById('bottomControlsBox').appendChild(stop);
   stop.style.margin = `0 ${timerW / 30}px 0 0`;
+  stop.title = 'stop and reset timer';
 
   document.getElementById('bottomControlsBox').appendChild(play);
   play.style.margin = `0 ${timerW / 23}px 0 0`;
+  play.title = 'start timer';
 
   document.getElementById('bottomControlsBox').appendChild(pause);
   pause.style.margin = `0 ${timerW / 23}px 0 0`;
+  pause.title = 'pause timer';
 
   //     'Display', 'header' & 'footer' styling ...........................
 
@@ -260,7 +266,6 @@ function drawPage() {
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
 
     document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
-    topHourSetText.innerHTML = hourOnD.toString();
     topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
@@ -275,7 +280,6 @@ function drawPage() {
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
 
     document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
-    topTenSetText.innerHTML = tenMinOnD.toString();
     topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
@@ -283,7 +287,6 @@ function drawPage() {
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
 
     document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
-    topMinSetText.innerHTML = minOnD.toString();
     topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
@@ -306,7 +309,6 @@ function drawPage() {
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
 
     document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
-    bottomHourSetText.innerHTML = hourOffD.toString();
     bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
@@ -318,10 +320,11 @@ function drawPage() {
     bottomSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
     bottomSettingsHText.style.color = offDutyColor;
 
+    resetSettings();
+
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
 
     document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
-    bottomTenSetText.innerHTML = tenMinOffD.toString();
     bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
@@ -329,7 +332,6 @@ function drawPage() {
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
 
     document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
-    bottomMinSetText.innerHTML = minOffD.toString();
     bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
 
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
@@ -367,6 +369,17 @@ function drawPage() {
     progressBar.style.borderRadius = `${textH}px`;
   }
 
+}
+
+// ---------- Styling that may be called inside & outside drawPage() ---------
+
+function resetSettings() {
+  topHourSetText.innerHTML = hourOnD.toString();
+  topTenSetText.innerHTML = tenMinOnD.toString();
+  topMinSetText.innerHTML = minOnD.toString();
+  bottomHourSetText.innerHTML = hourOffD.toString();
+  bottomTenSetText.innerHTML = tenMinOffD.toString();
+  bottomMinSetText.innerHTML = minOffD.toString();
 }
 
 // ---------- Button actions --------------------------------
@@ -425,7 +438,7 @@ function clickUnmute() {
 function clickReset() {
   hourOnD = 0; tenMinOnD = 2; minOnD = 5;
   hourOffD = 0; tenMinOffD = 0; minOffD = 5;
-  drawPage();
+  resetSettings();
 }
 
 function clickIncr(thisID) {
