@@ -342,14 +342,14 @@ function drawPage() {
     bottomSettingsMinText.innerHTML = "m";
     bottomSettingsMinText.style.color = offDutyColor;
 
-  } else { // mode == "timer" ... Timer container contents ...............
+  } else { // mode == "timer" ... Timer container contents ...................
     topTimerContainer.style.height = `${mainDisplayH * 0.75}px`;
     bottomTimerContainer.style.height = `${mainDisplayH * 0.25}px`;
     timerDigitsTextBox.style.height = `70%`;
     timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
     timerDigitsTextBox.style.display = 'inline-block';
     timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
-    timerDigitsText.innerHTML = "0:25:00";
+    timerDigitsText.innerHTML = `${hourOnD}:${tenMinOnD}${minOnD}:00`;
     timerDigitsText.style.color = modeColor;
     timerDigitsText.style.fontSize = `${textH * 4}px`;
     timerDigitsText.style.textAlign = 'center';
@@ -368,7 +368,6 @@ function drawPage() {
     progressBar.style.backgroundColor = modeColor;
     progressBar.style.borderRadius = `${textH}px`;
   }
-
 }
 
 // ---------- Styling that may be called inside & outside drawPage() ---------
@@ -382,7 +381,7 @@ function resetSettings() {
   bottomMinSetText.innerHTML = minOffD.toString();
 }
 
-// ---------- Button actions --------------------------------
+// ---------- Button actions -------------------------------------------------
 
 function btnHover() {
   let thisID = this.id;
@@ -481,7 +480,7 @@ function clickIncr(thisID) {
   }
 }
 
-// ---------- initial declarations and commands -------------
+// ---------- initial declarations and commands ------------------------------
 
 let timerW = 0;
 let timerH = 0;
