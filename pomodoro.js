@@ -413,8 +413,13 @@ function incrUnHover() {
 
 function clickPlay() {
   // need to add conditional for when 'play' is used to resume from 'paused'
-  mode = "timer";
-  drawPage();
+
+  if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||  (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
+    window.alert('Timer(s) cannot have 0:00 starting value!');
+  } else {
+    mode = "timer";
+    drawPage();
+  }
 }
 
 function clickStop() {
