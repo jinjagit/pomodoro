@@ -347,7 +347,7 @@ function drawPage() {
     timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
     timerDigitsTextBox.style.display = 'inline-block';
     timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
-    timerDigitsText.innerHTML = "0:00:25";
+    timerDigitsText.innerHTML = "0:25:00";
     timerDigitsText.style.color = modeColor;
     timerDigitsText.style.fontSize = `${textH * 4}px`;
     timerDigitsText.style.textAlign = 'center';
@@ -420,6 +420,12 @@ function clickUnmute() {
   mute = false;
   soundOff.style.display = 'none';
   soundOn.style.display = 'inline-block';
+}
+
+function clickReset() {
+  hourOnD = 0; tenMinOnD = 2; minOnD = 5;
+  hourOffD = 0; tenMinOffD = 0; minOffD = 5;
+  drawPage();
 }
 
 function clickIncr(thisID) {
@@ -541,6 +547,10 @@ soundOn.setAttributeNode(clickMuteAtt);
 let clickUnmuteAtt = document.createAttribute("onclick");
 clickUnmuteAtt.value = "clickUnmute()";
 soundOff.setAttributeNode(clickUnmuteAtt);
+
+let clickResetAtt = document.createAttribute("onclick");
+clickResetAtt.value = "clickReset()";
+reset.setAttributeNode(clickResetAtt);
 
 let incrBtns = [];
 let clickIncrAtts = [];
