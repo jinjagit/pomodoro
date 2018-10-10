@@ -412,10 +412,11 @@ function incrUnHover() {
 }
 
 function clickPlay() {
-  // need to add conditional for when 'play' is used to resume from 'paused'
+  // need to add conditional for when 'play' is used to resume from 'paused',
+  // which can be based on current mode ('settings' v. 'timer').
 
   if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||  (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
-    window.alert('Timer(s) cannot have 0:00 starting value!');
+    window.alert('Timer(s) cannot start at 0:00!');
   } else {
     mode = "timer";
     drawPage();
