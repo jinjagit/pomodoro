@@ -425,6 +425,7 @@ function clickPlay() {
     }
   } else {
     paused = false;
+    clearInterval(blink);
     run = setInterval(everySecond, 1000);
     play.style.display = 'none';
     pause.style.display = 'inline-block';
@@ -433,6 +434,8 @@ function clickPlay() {
 }
 
 function clickStop() {
+  paused = false;
+  clearInterval(blink);
   clearInterval(run); // only really pauses timer
   mode = "settings";
   drawPage();
@@ -459,6 +462,7 @@ function clickReset() {
 function clickPause() {
   paused = true;
   clearInterval(run);
+  blink = setInterval(blinkTimer, 500);
   pause.style.display = 'none';
   play.style.display = 'inline-block';
 }
@@ -506,13 +510,13 @@ function clickIncr(thisID) {
 // ---------- timer functions ------------------------------------------------
 
 function everySecond() {
-  let completion = 0;
+  let progBarFactor = 0;
 
   if (timerMode == "on_duty") {
     onDutyCurrent--;
     timerText = parseTimerText(onDutyCurrent);
-    completion = (onDutyCurrent - 1) / (onDutyTotal - 1);
-    progBarW = 0.735 * completion;
+    progBarFactor = (onDutyCurrent - 1) / (onDutyTotal - 1);
+    progBarW = 0.735 * progBarFactor;
     if (onDutyCurrent == 0) {
       onDutyCurrent = onDutyTotal;
       timerText = parseTimerText(offDutyCurrent);
@@ -524,8 +528,8 @@ function everySecond() {
   } else {
     offDutyCurrent--;
     timerText = parseTimerText(offDutyCurrent);
-    completion = (offDutyCurrent - 1) / (offDutyTotal - 1);
-    progBarW = 0.735 * completion;
+    progBarFactor = (offDutyCurrent - 1) / (offDutyTotal - 1);
+    progBarW = 0.735 * progBarFactor;
     if (offDutyCurrent == 0) {
       offDutyCurrent = offDutyTotal;
       timerText = parseTimerText(onDutyCurrent);
@@ -567,6 +571,14 @@ function parseTimerText(seconds) {
   }
 }
 
+function blinkTimer() {
+  if (timerDigitsText.innerHTML == "") {
+    timerDigitsText.innerHTML = timerText;
+  } else {
+    timerDigitsText.innerHTML = "";
+  }
+}
+
 // ---------- initial declarations and commands ------------------------------
 
 let timerW = 0;
@@ -602,6 +614,7 @@ let offDutyCurrent = 0;
 let timerText = "";
 
 let run = true;
+let blink = true;
 let paused = false;
 
 let dispBbgColor = "black";
