@@ -425,6 +425,7 @@ function clickPlay() {
     }
   } else {
     paused = false;
+    timerDigitsText.innerHTML = timerText;
     clearInterval(blink);
     run = setInterval(everySecond, 1000);
     play.style.display = 'none';
@@ -624,11 +625,11 @@ let alarmRepeat = 0;
 let setAlarmRepeat = 3;
 
 let hourOnD = 0;
-let tenMinOnD = 0; // 2
-let minOnD = 1; // 5
+let tenMinOnD = 2;
+let minOnD = 5;
 let hourOffD = 0;
 let tenMinOffD = 0;
-let minOffD = 1; // 5
+let minOffD = 5;
 
 let onDutyTotal = 0; // start value in seconds
 let onDutyCurrent = 0; // current value in seconds
