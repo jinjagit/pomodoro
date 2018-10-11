@@ -2,7 +2,7 @@
 
 By Simon Tharby, 2018.
 
-My solution to the [Pomodoro Clock exercise](https://www.theodinproject.com/courses/web-development-101/lessons/pairing-project), from the Odin project.
+My solution to the [Pomodoro Clock exercise](https://www.theodinproject.com/courses/web-development-101/lessons/pairing-project), from the Odin project. Desktop version only.
 
 [View in browser](https://jinjagit.github.io/pomodoro/)
 
