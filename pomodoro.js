@@ -189,29 +189,12 @@ function drawPage() {
   bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
   bottomControlsBox.style.height = `${textH * 1.5}px`;
 
-  document.getElementById('bottomControlsBox').appendChild(soundOn);
   soundOn.style.margin = `0 ${timerW / 36}px 0 0`;
-  soundOn.title = 'mute alarm';
-
-  document.getElementById('bottomControlsBox').appendChild(soundOff);
   soundOff.style.margin = `0 ${timerW / 36}px 0 0`;
-  soundOff.title = 'unmute alarm';
-
-  document.getElementById('bottomControlsBox').appendChild(reset);
   reset.style.margin = `0 ${timerW / 30}px 0 0`;
-  reset.title = 'reset defaults';
-
-  document.getElementById('bottomControlsBox').appendChild(stop);
   stop.style.margin = `0 ${timerW / 30}px 0 0`;
-  stop.title = 'stop and reset timer';
-
-  document.getElementById('bottomControlsBox').appendChild(play);
   play.style.margin = `0 ${timerW / 23}px 0 0`;
-  play.title = 'start timer';
-
-  document.getElementById('bottomControlsBox').appendChild(pause);
   pause.style.margin = `0 ${timerW / 23}px 0 0`;
-  pause.title = 'pause timer';
 
   //     'Display', 'header' & 'footer' styling ...........................
 
@@ -415,15 +398,22 @@ function clickPlay() {
   // need to add conditional for when 'play' is used to resume from 'paused',
   // which can be based on current mode ('settings' v. 'timer').
 
-  if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||  (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
+  if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||
+    (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
     window.alert('Timer(s) cannot start at 0:00!');
   } else {
+    onDutyTotal = (hourOnD * 3600) + (tenMinOnD * 600) + (minOnD * 60);
+    offDutyTotal = (hourOffD * 3600) + (tenMinOffD * 600) + (minOffD * 60);
+    onDutyCurrent = onDutyTotal;
+    offDutyCurrent = offDutyCurrent;
+    run = setInterval(everySecond, 1000);
     mode = "timer";
     drawPage();
   }
 }
 
 function clickStop() {
+  clearInterval(run); // only really pauses timer
   mode = "settings";
   drawPage();
 }
@@ -486,6 +476,13 @@ function clickIncr(thisID) {
   }
 }
 
+// ---------- timer functions ------------------------------------------------
+
+function everySecond() {
+  onDutyCurrent--;
+  console.log(onDutyCurrent);
+}
+
 // ---------- initial declarations and commands ------------------------------
 
 let timerW = 0;
@@ -511,6 +508,13 @@ let minOnD = 5;
 let hourOffD = 0;
 let tenMinOffD = 0;
 let minOffD = 5;
+
+let onDutyTotal = 0; // start value in seconds
+let onDutyCurrent = 0; // current value in seconds
+let offDutyTotal = 0;
+let offDutyCurrent = 0;
+
+let run = true;
 
 let dispBbgColor = "black";
 let dispAbgColor = "black";
@@ -549,6 +553,20 @@ let soundOn = document.createElement('img');
 soundOn.src = 'img/soundOnMask.png';
 let soundOff = document.createElement('img');
 soundOff.src = 'img/soundOffMask.png';
+
+document.getElementById('bottomControlsBox').appendChild(soundOn);
+document.getElementById('bottomControlsBox').appendChild(soundOff);
+document.getElementById('bottomControlsBox').appendChild(reset);
+document.getElementById('bottomControlsBox').appendChild(stop);
+document.getElementById('bottomControlsBox').appendChild(play);
+document.getElementById('bottomControlsBox').appendChild(pause);
+
+soundOn.title = 'mute alarm';
+soundOff.title = 'unmute alarm';
+reset.title = 'reset defaults';
+stop.title = 'stop and reset timer';
+play.title = 'start timer';
+pause.title = 'pause timer';
 
 let clickPlayAtt = document.createAttribute("onclick");
 clickPlayAtt.value = "clickPlay()";
