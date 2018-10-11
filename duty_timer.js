@@ -114,7 +114,7 @@ function drawPage() {
       modeHoverColor = offDutyHoverColor;
       modeColor = offDutyColor;
       progColor = offDutyProgColor;
-      topLineW = timerW * 0.32
+      topLineW = timerW * 0.325
     }
   }
 
@@ -361,7 +361,7 @@ function drawPage() {
 
     progressBar.style.zIndex = "-1";
     progressBar.style.height = `100%`;
-    progressBar.style.width = `${timerW * 0.5}px`; // 0.025 min, 0.76 max factor
+    progressBar.style.width = `${timerW * (0.025 + progBarW)}px`; // 0.025 min, 0.76 max factor
     progressBar.style.backgroundColor = modeColor;
     progressBar.style.borderRadius = `${textH}px`;
   }
@@ -409,8 +409,6 @@ function incrUnHover() {
 }
 
 function clickPlay() {
-  // need to add conditional for when 'play' is used to resume from 'paused',
-  // which can be based on current mode ('settings' v. 'timer').
   if (mode == "settings") {
     if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||
       (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
@@ -511,6 +509,7 @@ function everySecond() {
   if (timerMode == "on_duty") {
     onDutyCurrent--;
     timerText = parseTimerText(onDutyCurrent);
+    progBarW = 0.735 * (onDutyCurrent / onDutyTotal)
     if (onDutyCurrent == 0) {
       onDutyCurrent = onDutyTotal;
       timerText = parseTimerText(offDutyCurrent);
@@ -521,6 +520,7 @@ function everySecond() {
   } else {
     offDutyCurrent--;
     timerText = parseTimerText(offDutyCurrent);
+    progBarW = 0.735 * (offDutyCurrent / offDutyTotal)
     if (offDutyCurrent == 0) {
       offDutyCurrent = offDutyTotal;
       timerText = parseTimerText(onDutyCurrent);
@@ -529,7 +529,7 @@ function everySecond() {
       drawPage();
     }
   }
-
+  progressBar.style.width = `${timerW * (0.025 + progBarW)}px`; // 0.025 min, 0.76 max factor
   timerDigitsText.innerHTML = timerText;
 }
 
@@ -575,6 +575,7 @@ let topLineW = 0;
 let bottomLineW = 0;
 let lineTopVert = 0;
 let textH = 0;
+let progBarW = 0.735;
 
 let mode = "settings"; // "settings" or "timer"
 let timerMode = "on_duty"; // "on_duty" or "off_duty"
