@@ -29,13 +29,14 @@ function drawPage() {
     for (let i = 0; i < defaultItems.length; i++) {
       defaultItems[i].style.display = 'inline-block';
       defaultItems[i].style.verticalAlign = 'middle';
-      defaultItems[i].style.backgroundColor = modeColor;
+      defaultItems[i].style.backgroundColor = backgroundColor;
     }
   }
 
   function styleLines(lines) {
     for (let i = 0; i < lines.length; i++) {
       lines[i].style.height = `${lineH}px`;
+      lines[i].style.backgroundColor = modeColor;
     }
   }
 
@@ -143,34 +144,6 @@ function drawPage() {
   styleSettingsText(settingsText);
   styleTextBoxes(textBoxes);
 
-  // This block can all be set to 'black' when layout finalized -------------
-  container.style.backgroundColor = containerBgColor;
-  topDisplay.style.backgroundColor = dispBbgColor;
-  settingsDisplay.style.backgroundColor = settingsDispBbgColor;
-  timerDisplay.style.backgroundColor = mainDisplayBgColor;
-  body.style.background = bodyBgColor;
-  bottomDisplay.style.backgroundColor = dispAbgColor;
-  bottomControlsBox.style.backgroundColor = mainDisplayBgColor;
-  titleTextBox.style.backgroundColor = mainDisplayBgColor;
-  topSettingsContainer.style.backgroundColor = mainDisplayBgColor;
-  bottomSettingsContainer.style.backgroundColor = settingsDispBbgColor;
-  topSettingsTextBox.style.backgroundColor = settingsDispBbgColor;
-  bottomSettingsTextBox.style.backgroundColor = mainDisplayBgColor;
-  topSettingsHourBox.style.backgroundColor = settingsDispBbgColor;
-  topSettingsHTextBox.style.backgroundColor = settingsDispBbgColor;
-  topSettingsTenBox.style.backgroundColor = settingsDispBbgColor;
-  topSettingsMinBox.style.backgroundColor = settingsDispBbgColor;
-  topSettingsMinTextBox.style.backgroundColor = settingsDispBbgColor;
-  bottomSettingsHourBox.style.backgroundColor = mainDisplayBgColor;
-  bottomSettingsHTextBox.style.backgroundColor = mainDisplayBgColor;
-  bottomSettingsTenBox.style.backgroundColor = mainDisplayBgColor;
-  bottomSettingsMinBox.style.backgroundColor = mainDisplayBgColor;
-  bottomSettingsMinTextBox.style.backgroundColor = mainDisplayBgColor;
-  topTimerContainer.style.backgroundColor = mainDisplayBgColor;
-  bottomTimerContainer.style.backgroundColor = settingsDispBbgColor;
-  timerDigitsTextBox.style.backgroundColor = settingsDispBbgColor;
-  // ------------------------------------------------------------------------
-
   //      Styling common to all 'display' modes .............................
 
   lineTopL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
@@ -223,7 +196,6 @@ function drawPage() {
       play.style.display = 'inline-block';
       pause.style.display = 'none';
     }
-
   }
 
   if (mute == false) {
@@ -642,12 +614,7 @@ let run = true;
 let blink = true;
 let paused = false;
 
-let dispBbgColor = "black";
-let dispAbgColor = "black";
-let containerBgColor = "black";
-let bodyBgColor = "black";
-let mainDisplayBgColor = "black";
-let settingsDispBbgColor = "black";
+let backgroundColor = "black";
 let settingsColor = "hsl(28, 100%, 55%)";
 let settingsHoverColor = "hsl(28, 100%, 35%)";
 let onDutyColor = "hsl(215, 100%, 60%)";
@@ -759,6 +726,14 @@ let settingsText = [topHourSetText, topTenSetText, topMinSetText,
 let textBoxes = [titleTextBox, topSettingsTextBox, bottomSettingsTextBox,
     topSettingsHTextBox, topSettingsMinTextBox, bottomSettingsHTextBox,
     bottomSettingsMinTextBox];
+let backgroundElements = [body, container, topDisplay, settingsDisplay,
+    timerDisplay, bottomDisplay, bottomControlsBox, titleTextBox,
+    topSettingsContainer, bottomSettingsContainer, topSettingsTextBox,
+    bottomSettingsTextBox, topSettingsHourBox, topSettingsHTextBox,
+    topSettingsTenBox, topSettingsMinBox, topSettingsMinTextBox,
+    bottomSettingsHourBox, bottomSettingsHTextBox, bottomSettingsTenBox,
+    bottomSettingsMinBox, bottomSettingsMinTextBox, topTimerContainer,
+    bottomTimerContainer, timerDigitsTextBox];
 
 for (i = 0; i < buttons.length; i++) {
   buttons[i].id = buttonLabels[i];
@@ -766,27 +741,12 @@ for (i = 0; i < buttons.length; i++) {
   buttons[i].addEventListener('mouseout', btnUnHover);
 }
 
-// Toggle visible backgrounds for divs (for use in development)
-let editColor = false;
-
-if (editColor == true) {
-  containerBgColor = "#101519";
-  bodyBgColor = "#110f0b";
-  mainDisplayBgColor = "#0f0d09";
-  settingsDispBbgColor = '#1c1810';
+for (i = 0; i < backgroundElements.length; i++) {
+  backgroundElements[i].style.backgroundColor = backgroundColor;
 }
-
-
 
 body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
 container.style.margin = "auto";
-
-// ?separate setting styles (that don't change dynamically) from layouts,
-// which do change dynamically? Pull out of drawPage() into new
-// method 'stylePage()' [Cannot include any sizes relative to dimensions]
-// Note: almost EVERYTHING is dynamic, in that almost every element can change
-// any of its properties in some circumstance (change of; mode, size, etc.).
-// Perhaps only appendchild statements can be run just once at start?
 
 drawPage(); // Also called whenever window (body) is resized
