@@ -354,6 +354,7 @@ function clickPlay() {
       timerText = parseTimerText(onDutyCurrent);
       run = setInterval(everySecond, 1000);
       mode = "timer";
+      progBarW = 0.735
       drawPage();
     }
   } else {
