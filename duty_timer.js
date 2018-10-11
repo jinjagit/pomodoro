@@ -94,7 +94,7 @@ function drawPage() {
   lineH = topDisplayH * 0.045;
   bottomLineW = timerW * 0.3;
   lineTopVert = (topDisplayH - lineH) / 2;
-  textH = topDisplayH / 2.2; // ?change to 'textH'?
+  textH = topDisplayH / 2.2;
 
   if (mode == "settings") {
     timerDisplay.style.display = 'none';
@@ -108,11 +108,13 @@ function drawPage() {
     if (timerMode == "on_duty") {
       modeHoverColor = onDutyHoverColor;
       modeColor = onDutyColor;
+      progColor = onDutyProgColor;
       topLineW = timerW * 0.34;
     } else {
       modeHoverColor = offDutyHoverColor;
       modeColor = offDutyColor;
-      topLineW = timerW * 0.3 // guess... check
+      progColor = offDutyProgColor;
+      topLineW = timerW * 0.32
     }
   }
 
@@ -354,7 +356,7 @@ function drawPage() {
     progressBarBack.style.width = `${timerW * 0.76}px`;
     progressBarBack.style.display = 'inline-block';
     progressBarBack.style.margin = '4% 12% 7% 12%';
-    progressBarBack.style.backgroundColor = onDutyProgColor;
+    progressBarBack.style.backgroundColor = progColor;
     progressBarBack.style.borderRadius = `${textH}px`;
 
     progressBar.style.zIndex = "-1";
@@ -417,7 +419,7 @@ function clickPlay() {
       onDutyTotal = (hourOnD * 3600) + (tenMinOnD * 600) + (minOnD * 60);
       offDutyTotal = (hourOffD * 3600) + (tenMinOffD * 600) + (minOffD * 60);
       onDutyCurrent = onDutyTotal;
-      offDutyCurrent = offDutyCurrent;
+      offDutyCurrent = offDutyTotal;
       timerText = parseTimerText(onDutyCurrent);
       run = setInterval(everySecond, 1000);
       mode = "timer";
@@ -531,7 +533,7 @@ function parseTimerText(seconds) {
   if (minutes < 10 && hours > 0) {
     m = `0${minutes}`;
   } else m = `${minutes}`;
-  
+
   if (seconds < 10) {
     s = `0${seconds}`;
   } else {
@@ -565,11 +567,11 @@ let timerMode = "on_duty"; // "on_duty" or "off_duty"
 let mute = false;
 
 let hourOnD = 0;
-let tenMinOnD = 2;
-let minOnD = 5;
+let tenMinOnD = 2; // 2
+let minOnD = 5; // 5
 let hourOffD = 0;
 let tenMinOffD = 0;
-let minOffD = 5;
+let minOffD = 5; // 5
 
 let onDutyTotal = 0; // start value in seconds
 let onDutyCurrent = 0; // current value in seconds
@@ -594,9 +596,11 @@ let onDutyHoverColor = "hsl(215, 100%, 40%)";
 let onDutyProgColor = "hsl(215, 50%, 15%)";
 let offDutyColor = "hsl(104, 60%, 45%)";
 let offDutyHoverColor = "hsl(104, 60%, 25%)";
+let offDutyProgColor = "hsl(104, 30%, 10%)";
 
 let modeColor = settingsColor;
 let modeHoverColor = settingsHoverColor;
+let progColor = onDutyProgColor;
 
 let body = document.getElementsByTagName('body')[0];
 let topHourSetText = document.createElement("p");
