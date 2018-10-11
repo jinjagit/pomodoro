@@ -442,13 +442,16 @@ function clickStop() {
 }
 
 function clickMute() {
+  clearInterval(alert);
   mute = true;
+  alert.volume = 0.0;
   soundOn.style.display = 'none';
   soundOff.style.display = 'inline-block';
 }
 
 function clickUnmute() {
   mute = false;
+  alert.volume = 1.0;
   soundOff.style.display = 'none';
   soundOn.style.display = 'inline-block';
 }
@@ -518,6 +521,11 @@ function everySecond() {
     progBarFactor = (onDutyCurrent - 1) / (onDutyTotal - 1);
     progBarW = 0.735 * progBarFactor;
     if (onDutyCurrent == 0) {
+      if (mute == false) {
+        alarmRepeat = setAlarmRepeat;
+        playAlarm();
+        alarm = setInterval(playAlarm, 3000);
+      }
       onDutyCurrent = onDutyTotal;
       timerText = parseTimerText(offDutyCurrent);
       progBarW = 0.735;
@@ -531,6 +539,11 @@ function everySecond() {
     progBarFactor = (offDutyCurrent - 1) / (offDutyTotal - 1);
     progBarW = 0.735 * progBarFactor;
     if (offDutyCurrent == 0) {
+      if (mute == false) {
+        alarmRepeat = setAlarmRepeat;
+        playAlarm();
+        alarm = setInterval(playAlarm, 3000);
+      }
       offDutyCurrent = offDutyTotal;
       timerText = parseTimerText(onDutyCurrent);
       progBarW = 0.735
@@ -579,6 +592,15 @@ function blinkTimer() {
   }
 }
 
+function playAlarm() {
+  if (alarmRepeat > 0) {
+    alert.play();
+    alarmRepeat--;
+  } else {
+    clearInterval(alert);
+  }
+}
+
 // ---------- initial declarations and commands ------------------------------
 
 let timerW = 0;
@@ -598,6 +620,8 @@ let progBarW = 0.735;
 let mode = "settings"; // "settings" or "timer"
 let timerMode = "on_duty"; // "on_duty" or "off_duty"
 let mute = false;
+let alarmRepeat = 0;
+let setAlarmRepeat = 3;
 
 let hourOnD = 0;
 let tenMinOnD = 0; // 2
@@ -636,6 +660,8 @@ let modeColor = settingsColor;
 let modeHoverColor = settingsHoverColor;
 let progColor = onDutyProgColor;
 
+var alert = new Audio('./audio/alert.mp3');
+
 let body = document.getElementsByTagName('body')[0];
 let topHourSetText = document.createElement("p");
 let topTenSetText = document.createElement("p");
@@ -669,6 +695,8 @@ soundOff.title = 'unmute alarm';
 reset.title = 'reset defaults';
 stop.title = 'stop and reset timer';
 pause.title = 'pause timer';
+
+alert.volume = 1.0;
 
 let clickPlayAtt = document.createAttribute("onclick");
 clickPlayAtt.value = "clickPlay()";
