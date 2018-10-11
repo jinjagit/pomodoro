@@ -1,4 +1,6 @@
-//
+// Simon Tharby's solution to Odin Project's 'Pomodoro Clock' exercise:
+// https://www.theodinproject.com/courses/web-development-101/lessons/pairing-project
+// October, 2018
 
 function setLayout() {
   if (screen.width < 2200) { // 'standard' 1080p(ish) desktop
@@ -60,8 +62,6 @@ function drawPage() {
     for (let i = 0; i < incrBtns.length; i++) {
       incrBtns[i].style.width = '100%';
       incrBtns[i].style.display = 'block';
-
-
       if (i < 6) {
         incrBtns[i].style.backgroundColor = onDutyColor;
       } else {
@@ -121,19 +121,16 @@ function drawPage() {
 
   container.style.width = `${timerW}px`;
   container.style.margin = `${(window.innerHeight - timerH) / 2}px auto`;
-
   topDisplay.style.height= `${topDisplayH}px`;
   timerDisplay.style.height = `${mainDisplayH}px`;
   settingsDisplay.style.height = `${mainDisplayH}px`;
   bottomDisplay.style.height= `${bottomDisplayH}px`;
-
   topDisplay.style.lineHeight = `${topDisplayH}px`;
   bottomDisplay.style.lineHeight = `${bottomDisplayH}px`;
   topSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
   bottomSettingsContainer.style.lineHeight = `${mainDisplayH / 2}px`;
   topTimerContainer.style.lineHeight = `${mainDisplayH * 0.75}px`;
   bottomTimerContainer.style.lineHeight = `${mainDisplayH * 0.25}px`;
-
   bottomDisplay.style.textAlign = "right";
 
   styleDefaults(defaultItems); // includes lines
@@ -150,7 +147,6 @@ function drawPage() {
   lineTopR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
   lineBottomL.style.borderRadius = `${lineH / 2}px 0 0 ${lineH / 2}px`;
   lineBottomR.style.borderRadius = `0 ${lineH / 2}px ${lineH / 2}px 0`;
-
   lineTopL.style.width = `${topLineW}px`;
   lineTopR.style.width = `${topLineW}px`;
   lineBottomL.style.width = `${bottomLineW}px`;
@@ -158,7 +154,6 @@ function drawPage() {
 
   titleText.style.textAlign = 'center';
   titleText.style.color = modeColor;
-
   titleTextBox.style.width = `${timerW - 1 - (topLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
 
   bottomControlsBox.style.width = `${timerW - 1 - (bottomLineW * 2)}px`; // - 1px to prevent layout oveflow due to rounding errors
@@ -209,81 +204,54 @@ function drawPage() {
   if (mode == "settings") { // ... Settings container contents ..............
     topSettingsContainer.style.height = `${mainDisplayH / 2}px`;
     bottomSettingsContainer.style.height = `${mainDisplayH / 2}px`;
-
     topSettingsTextBox.style.width = `${timerW / 2.25}px`;
     bottomSettingsTextBox.style.width = `${timerW / 2.25}px`;
-
     topSettingsText.style.textAlign = 'right';
     topSettingsText.innerHTML = "ON DUTY:";
     topSettingsText.style.color = onDutyColor;
     topSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
-
     bottomSettingsText.style.textAlign = 'right';
     bottomSettingsText.innerHTML = "OFF DUTY:";
     bottomSettingsText.style.color = offDutyColor;
     bottomSettingsText.style.margin = `0 ${timerW / 23}px 0 0`;
-
     topSettingsHourBox.style.width = `${timerW / 13}px`;
     topSettingsHourBox.style.height = `${textH * 3}px`;
-
     topSettingsTenBox.style.width = `${timerW / 13}px`;
     topSettingsTenBox.style.height = `${textH * 3}px`;
-
     topSettingsMinBox.style.width = `${timerW / 13}px`;
     topSettingsMinBox.style.height = `${textH * 3}px`;
-
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[0]);
-
     document.getElementById('topSettingsHourBox').appendChild(topHourSetText);
     topHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('topSettingsHourBox').appendChild(incrBtns[1]);
-
     topSettingsHTextBox.style.width = `${timerW / 10}px`;
-
     topSettingsHText.style.textAlign = 'left';
     topSettingsHText.innerHTML = "h";
     topSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
     topSettingsHText.style.color = onDutyColor;
-
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[2]);
-
     document.getElementById('topSettingsTenBox').appendChild(topTenSetText);
     topTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('topSettingsTenBox').appendChild(incrBtns[3]);
-
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[4]);
-
     document.getElementById('topSettingsMinBox').appendChild(topMinSetText);
     topMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('topSettingsMinBox').appendChild(incrBtns[5]);
-
     topSettingsMinTextBox.style.width = `${timerW / 24}px`;
-
     topSettingsMinText.style.textAlign = 'right';
     topSettingsMinText.innerHTML = "m";
     topSettingsMinText.style.color = onDutyColor;
-
     bottomSettingsHourBox.style.width = `${timerW / 13}px`;
     bottomSettingsHourBox.style.height = `${textH * 3}px`;
-
     bottomSettingsTenBox.style.width = `${timerW / 13}px`;
     bottomSettingsTenBox.style.height = `${textH * 3}px`;
-
     bottomSettingsMinBox.style.width = `${timerW / 13}px`;
     bottomSettingsMinBox.style.height = `${textH * 3}px`;
-
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[6]);
-
     document.getElementById('bottomSettingsHourBox').appendChild(bottomHourSetText);
     bottomHourSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('bottomSettingsHourBox').appendChild(incrBtns[7]);
-
     bottomSettingsHTextBox.style.width = `${timerW / 10}px`;
-
     bottomSettingsHText.style.textAlign = 'left';
     bottomSettingsHText.innerHTML = "h";
     bottomSettingsHText.style.margin = `0 0 0 ${timerW / 75}px`;
@@ -292,21 +260,14 @@ function drawPage() {
     resetSettings();
 
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[8]);
-
     document.getElementById('bottomSettingsTenBox').appendChild(bottomTenSetText);
     bottomTenSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('bottomSettingsTenBox').appendChild(incrBtns[9]);
-
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[10]);
-
     document.getElementById('bottomSettingsMinBox').appendChild(bottomMinSetText);
     bottomMinSetText.style.margin = `${timerH / 105}px 0 0 0`;
-
     document.getElementById('bottomSettingsMinBox').appendChild(incrBtns[11]);
-
     bottomSettingsMinTextBox.style.width = `${timerW / 24}px`;
-
     bottomSettingsMinText.style.textAlign = 'right';
     bottomSettingsMinText.innerHTML = "m";
     bottomSettingsMinText.style.color = offDutyColor;
@@ -403,7 +364,6 @@ function clickPlay() {
     play.style.display = 'none';
     pause.style.display = 'inline-block';
   }
-
 }
 
 function clickStop() {
@@ -411,6 +371,7 @@ function clickStop() {
   clearInterval(blink);
   clearInterval(run); // only really pauses timer
   mode = "settings";
+  timerMode = "on_duty";
   drawPage();
 }
 
@@ -578,11 +539,9 @@ function playAlarm() {
 
 let timerW = 0;
 let timerH = 0;
-
 let bottomDisplayH = 0;
 let topDisplayH = 0;
 let mainDisplayH = 0;
-
 let lineH = 0;
 let topLineW = 0;
 let bottomLineW = 0;
@@ -628,7 +587,7 @@ let modeColor = settingsColor;
 let modeHoverColor = settingsHoverColor;
 let progColor = onDutyProgColor;
 
-var alert = new Audio('./audio/alert.mp3');
+let alert = new Audio('./audio/alert.mp3');
 
 let body = document.getElementsByTagName('body')[0];
 let topHourSetText = document.createElement("p");
@@ -651,41 +610,21 @@ soundOn.src = 'img/soundOnMask.png';
 let soundOff = document.createElement('img');
 soundOff.src = 'img/soundOffMask.png';
 
-document.getElementById('bottomControlsBox').appendChild(soundOn);
-document.getElementById('bottomControlsBox').appendChild(soundOff);
-document.getElementById('bottomControlsBox').appendChild(reset);
-document.getElementById('bottomControlsBox').appendChild(stop);
-document.getElementById('bottomControlsBox').appendChild(play);
-document.getElementById('bottomControlsBox').appendChild(pause);
-
-soundOn.title = 'mute alarm';
-soundOff.title = 'unmute alarm';
-reset.title = 'reset defaults';
-stop.title = 'stop and reset timer';
-pause.title = 'pause timer';
-
-alert.volume = 1.0;
-
 let clickPlayAtt = document.createAttribute("onclick");
 clickPlayAtt.value = "clickPlay()";
 play.setAttributeNode(clickPlayAtt);
-
 let clickStopAtt = document.createAttribute("onclick");
 clickStopAtt.value = "clickStop()";
 stop.setAttributeNode(clickStopAtt);
-
 let clickMuteAtt = document.createAttribute("onclick");
 clickMuteAtt.value = "clickMute()";
 soundOn.setAttributeNode(clickMuteAtt);
-
 let clickUnmuteAtt = document.createAttribute("onclick");
 clickUnmuteAtt.value = "clickUnmute()";
 soundOff.setAttributeNode(clickUnmuteAtt);
-
 let clickResetAtt = document.createAttribute("onclick");
 clickResetAtt.value = "clickReset()";
 reset.setAttributeNode(clickResetAtt);
-
 let clickPauseAtt = document.createAttribute("onclick");
 clickPauseAtt.value = "clickPause()";
 pause.setAttributeNode(clickPauseAtt);
@@ -744,6 +683,21 @@ for (i = 0; i < buttons.length; i++) {
 for (i = 0; i < backgroundElements.length; i++) {
   backgroundElements[i].style.backgroundColor = backgroundColor;
 }
+
+document.getElementById('bottomControlsBox').appendChild(soundOn);
+document.getElementById('bottomControlsBox').appendChild(soundOff);
+document.getElementById('bottomControlsBox').appendChild(reset);
+document.getElementById('bottomControlsBox').appendChild(stop);
+document.getElementById('bottomControlsBox').appendChild(play);
+document.getElementById('bottomControlsBox').appendChild(pause);
+
+soundOn.title = 'mute alarm';
+soundOff.title = 'unmute alarm';
+reset.title = 'reset defaults';
+stop.title = 'stop and reset timer';
+pause.title = 'pause timer';
+
+alert.volume = 1.0;
 
 body.style.fontFamily = "'Ubuntu Mono', monospace";
 body.style.fontWeight = "normal";
