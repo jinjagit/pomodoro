@@ -506,13 +506,17 @@ function clickIncr(thisID) {
 // ---------- timer functions ------------------------------------------------
 
 function everySecond() {
+  let completion = 0;
+
   if (timerMode == "on_duty") {
     onDutyCurrent--;
     timerText = parseTimerText(onDutyCurrent);
-    progBarW = 0.735 * (onDutyCurrent / onDutyTotal)
+    completion = (onDutyCurrent - 1) / (onDutyTotal - 1);
+    progBarW = 0.735 * completion;
     if (onDutyCurrent == 0) {
       onDutyCurrent = onDutyTotal;
       timerText = parseTimerText(offDutyCurrent);
+      progBarW = 0.735;
       timerMode = "off_duty";
       // insert call alarm (if mute == false)
       drawPage();
@@ -520,10 +524,12 @@ function everySecond() {
   } else {
     offDutyCurrent--;
     timerText = parseTimerText(offDutyCurrent);
-    progBarW = 0.735 * (offDutyCurrent / offDutyTotal)
+    completion = (offDutyCurrent - 1) / (offDutyTotal - 1);
+    progBarW = 0.735 * completion;
     if (offDutyCurrent == 0) {
       offDutyCurrent = offDutyTotal;
       timerText = parseTimerText(onDutyCurrent);
+      progBarW = 0.735
       timerMode = "on_duty";
       // insert call alarm (if mute == false)
       drawPage();
