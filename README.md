@@ -4,7 +4,7 @@ My solution to the [Pomodoro Clock exercise](https://www.theodinproject.com/cour
 
 For this project, the instructions were to simply produce a browser app that functions like [this](http://romantic-trouble.surge.sh/) example. No step-by-step guidance, nor other support specific to this exercise, was provided.
 
-My solution is 90%+ pure JavaScript, mainly to enable restyling when the app switches between display 'modes' (settings / on duty timer / off duty timer) and resizing when constrained by smaller window dimensions.
+My solution is 90% pure JavaScript, mainly to enable restyling when the app switches between display 'modes' (settings / on duty timer / off duty timer) and resizing when constrained by smaller window dimensions.
 
 Features:
 
