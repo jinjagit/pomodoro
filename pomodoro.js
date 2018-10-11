@@ -204,12 +204,24 @@ function drawPage() {
     pause.style.display = 'none';
     play.style.display = 'inline-block';
     reset.style.display = 'inline-block';
+    play.title = 'start timer';
   } else if (mode == "timer") { // Refactor when add on/off duty stylings
-    titleText.innerHTML = "ON DUTY";
-    stop.style.display = 'inline-block'; // needs condition on pause state
-    pause.style.display = 'inline-block'; // needs condition on pause state
-    play.style.display = 'none';
+    stop.style.display = 'inline-block';
     reset.style.display = 'none';
+    play.title = 'resume countdown';
+    if (timerMode == "on_duty") {
+      titleText.innerHTML = "ON DUTY";
+    } else {
+      titleText.innerHTML = "OFF DUTY";
+    }
+    if (paused == false) {
+      pause.style.display = 'inline-block';
+      play.style.display = 'none';
+    } else {
+      play.style.display = 'inline-block';
+      pause.style.display = 'none';
+    }
+
   }
 
   if (mute == false) {
@@ -332,7 +344,7 @@ function drawPage() {
     timerDigitsTextBox.style.width = `${timerW * 0.8}px`;
     timerDigitsTextBox.style.display = 'inline-block';
     timerDigitsTextBox.style.margin = '5.5% 10% 5.5% 10%';
-    timerDigitsText.innerHTML = `${hourOnD}:${tenMinOnD}${minOnD}:00`;
+    timerDigitsText.innerHTML = timerText;
     timerDigitsText.style.color = modeColor;
     timerDigitsText.style.fontSize = `${textH * 4}px`;
     timerDigitsText.style.textAlign = 'center';
@@ -397,19 +409,27 @@ function incrUnHover() {
 function clickPlay() {
   // need to add conditional for when 'play' is used to resume from 'paused',
   // which can be based on current mode ('settings' v. 'timer').
-
-  if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||
-    (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
-    window.alert('Timer(s) cannot start at 0:00!');
+  if (mode == "settings") {
+    if ((hourOnD == 0 && tenMinOnD == 0 && minOnD == 0) ||
+      (hourOffD == 0 && tenMinOffD == 0 && minOffD == 0)) {
+      window.alert('Timer(s) cannot start at 0:00!');
+    } else {
+      onDutyTotal = (hourOnD * 3600) + (tenMinOnD * 600) + (minOnD * 60);
+      offDutyTotal = (hourOffD * 3600) + (tenMinOffD * 600) + (minOffD * 60);
+      onDutyCurrent = onDutyTotal;
+      offDutyCurrent = offDutyCurrent;
+      timerText = parseTimerText(onDutyCurrent);
+      run = setInterval(everySecond, 1000);
+      mode = "timer";
+      drawPage();
+    }
   } else {
-    onDutyTotal = (hourOnD * 3600) + (tenMinOnD * 600) + (minOnD * 60);
-    offDutyTotal = (hourOffD * 3600) + (tenMinOffD * 600) + (minOffD * 60);
-    onDutyCurrent = onDutyTotal;
-    offDutyCurrent = offDutyCurrent;
+    paused = false;
     run = setInterval(everySecond, 1000);
-    mode = "timer";
-    drawPage();
+    play.style.display = 'none';
+    pause.style.display = 'inline-block';
   }
+
 }
 
 function clickStop() {
@@ -434,6 +454,13 @@ function clickReset() {
   hourOnD = 0; tenMinOnD = 2; minOnD = 5;
   hourOffD = 0; tenMinOffD = 0; minOffD = 5;
   resetSettings();
+}
+
+function clickPause() {
+  paused = true;
+  clearInterval(run);
+  pause.style.display = 'none';
+  play.style.display = 'inline-block';
 }
 
 function clickIncr(thisID) {
@@ -479,8 +506,43 @@ function clickIncr(thisID) {
 // ---------- timer functions ------------------------------------------------
 
 function everySecond() {
-  onDutyCurrent--;
-  console.log(onDutyCurrent);
+  if (timerMode == "on_duty") {
+    onDutyCurrent--;
+    timerText = parseTimerText(onDutyCurrent);
+  } else {
+    offDutyCurrent--;
+    timerText = parseTimerText(offDutyCurrent);
+  }
+
+  timerDigitsText.innerHTML = timerText;
+}
+
+function parseTimerText(seconds) {
+  let hours = 0;
+  let mins = 0;
+  let m = "";
+  let s = ""
+
+  hours = Math.floor(seconds / 3600);
+  seconds = seconds - (3600 * hours);
+  minutes = Math.floor(seconds / 60);
+  seconds = seconds - (60 * minutes);
+
+  if (minutes < 10 && hours > 0) {
+    m = `0${minutes}`;
+  } else m = `${minutes}`;
+  
+  if (seconds < 10) {
+    s = `0${seconds}`;
+  } else {
+    s = `${seconds}`;
+  }
+
+  if (hours > 0) {
+    return `${hours}:${m}:${s}`;
+  } else {
+    return `${m}:${s}`;
+  }
 }
 
 // ---------- initial declarations and commands ------------------------------
@@ -514,7 +576,10 @@ let onDutyCurrent = 0; // current value in seconds
 let offDutyTotal = 0;
 let offDutyCurrent = 0;
 
+let timerText = "";
+
 let run = true;
+let paused = false;
 
 let dispBbgColor = "black";
 let dispAbgColor = "black";
@@ -565,7 +630,6 @@ soundOn.title = 'mute alarm';
 soundOff.title = 'unmute alarm';
 reset.title = 'reset defaults';
 stop.title = 'stop and reset timer';
-play.title = 'start timer';
 pause.title = 'pause timer';
 
 let clickPlayAtt = document.createAttribute("onclick");
@@ -587,6 +651,10 @@ soundOff.setAttributeNode(clickUnmuteAtt);
 let clickResetAtt = document.createAttribute("onclick");
 clickResetAtt.value = "clickReset()";
 reset.setAttributeNode(clickResetAtt);
+
+let clickPauseAtt = document.createAttribute("onclick");
+clickPauseAtt.value = "clickPause()";
+pause.setAttributeNode(clickPauseAtt);
 
 let incrBtns = [];
 let clickIncrAtts = [];
