@@ -511,9 +511,23 @@ function everySecond() {
   if (timerMode == "on_duty") {
     onDutyCurrent--;
     timerText = parseTimerText(onDutyCurrent);
+    if (onDutyCurrent == 0) {
+      onDutyCurrent = onDutyTotal;
+      timerText = parseTimerText(offDutyCurrent);
+      timerMode = "off_duty";
+      // insert call alarm (if mute == false)
+      drawPage();
+    }
   } else {
     offDutyCurrent--;
     timerText = parseTimerText(offDutyCurrent);
+    if (offDutyCurrent == 0) {
+      offDutyCurrent = offDutyTotal;
+      timerText = parseTimerText(onDutyCurrent);
+      timerMode = "on_duty";
+      // insert call alarm (if mute == false)
+      drawPage();
+    }
   }
 
   timerDigitsText.innerHTML = timerText;
@@ -567,11 +581,11 @@ let timerMode = "on_duty"; // "on_duty" or "off_duty"
 let mute = false;
 
 let hourOnD = 0;
-let tenMinOnD = 2; // 2
-let minOnD = 5; // 5
+let tenMinOnD = 0; // 2
+let minOnD = 1; // 5
 let hourOffD = 0;
 let tenMinOffD = 0;
-let minOffD = 5; // 5
+let minOffD = 1; // 5
 
 let onDutyTotal = 0; // start value in seconds
 let onDutyCurrent = 0; // current value in seconds
