@@ -23,4 +23,4 @@ My solution is 90% pure JavaScript, mainly to enable restyling when the app swit
 
 Although the pure JavaScript approach seems to be long-winded, this is because almost all styling is included in the .js file, and not a CSS file. This approach enables the resizing of the app when constrained by smaller windows and the dynamic changes of layouts, colors and contents needed for the design I chose.
 
-I'm really pleased with the way the design looks clean and elegant (in my opinion), and has the sci-fi vibe I aimed for.
+I'm pleased with the (in my opinion) clean and elegant design, which also has the sci-fi vibe I aimed for.
