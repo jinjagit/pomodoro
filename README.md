@@ -1,4 +1,6 @@
-## Duty Timer, by Simon Tharby, 2018.
+## Duty Timer
+
+By Simon Tharby, 2018.
 
 My solution to the [Pomodoro Clock exercise](https://www.theodinproject.com/courses/web-development-101/lessons/pairing-project), from the Odin project.
 
