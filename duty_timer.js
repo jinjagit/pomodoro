@@ -175,7 +175,7 @@ function drawPage() {
     play.style.display = 'inline-block';
     reset.style.display = 'inline-block';
     play.title = 'start timer';
-  } else if (mode == "timer") { // Refactor when add on/off duty stylings
+  } else if (mode == "timer") {
     stop.style.display = 'inline-block';
     reset.style.display = 'none';
     play.title = 'resume countdown';
@@ -370,7 +370,7 @@ function clickPlay() {
 function clickStop() {
   paused = false;
   clearInterval(blink);
-  clearInterval(run); // only really pauses timer
+  clearInterval(run);
   mode = "settings";
   timerMode = "on_duty";
   drawPage();
