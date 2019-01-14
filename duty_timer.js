@@ -414,7 +414,7 @@ function clickIncr(thisID) {
     topHourSetText.innerHTML = hourOnD.toString();
   } else if (thisID == 2) {
     tenMinOnD = (tenMinOnD + 1) % 6;
-    topTenSetText.innerHTML = tenMinOnD.toString();
+    topTenSetText.innerHTML = tenMinOnD.toString()1;
   } else if (thisID == 3) {
     tenMinOnD = (tenMinOnD + 5) % 6;
     topTenSetText.innerHTML = tenMinOnD.toString();
